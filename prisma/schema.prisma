@@ -1,0 +1,129 @@
+// Esquema de base de datos — Bitácora Curiosa
+// Motor: PostgreSQL (pensado para Vercel Postgres / Neon)
+//
+// El catálogo de productos (nombre, precio, imágenes, descripciones) sigue
+// viviendo en /data/products.ts, como pidió el brief original: no hay panel
+// de administración, los cambios de catálogo se hacen editando ese archivo
+// con ayuda de Claude. Esta base de datos SOLO guarda lo que necesita
+// persistir para ventas reales: stock vivo, pedidos, ítems, estado de pago
+// y solicitudes de arrepentimiento.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  // Conexión directa (sin pooling) para migraciones, requerida por Neon/Vercel Postgres.
+  directUrl = env("DIRECT_URL")
+}
+
+enum EstadoPago {
+  PENDIENTE
+  APROBADO
+  EN_PROCESO
+  RECHAZADO
+  CANCELADO
+}
+
+enum MetodoEntrega {
+  ENVIO
+  RETIRO
+}
+
+/// Stock vivo por producto. El "id" y el "slug" deben coincidir con los
+/// definidos en /data/products.ts. Se carga inicialmente con
+/// `npm run db:seed` y después se actualiza a mano o por script propio.
+model ProductoStock {
+  productoId    String   @id
+  slug          String   @unique
+  stock         Int
+  /// Stock por variante (ej. talles), formato { "v1": 4, "v2": 8 }.
+  /// Vacío si el producto no tiene variantes.
+  stockVariantes Json    @default("{}")
+  actualizadoEn DateTime @updatedAt
+
+  @@map("productos_stock")
+}
+
+model Pedido {
+  id                      String        @id @default(cuid())
+  /// Identificador único usado como external_reference en Mercado Pago.
+  referenciaExterna       String        @unique
+  estado                  EstadoPago    @default(PENDIENTE)
+  metodoEntrega           MetodoEntrega
+
+  // Datos de la persona compradora
+  nombre                  String
+  apellido                String
+  email                   String
+  telefono                String
+  dni                     String?
+
+  // Datos de envío (nulos si metodoEntrega = RETIRO)
+  provincia               String?
+  localidad               String?
+  codigoPostal            String?
+  direccion               String?
+  numero                  String?
+  pisoDepto               String?
+  indicaciones            String?
+
+  // Montos, siempre en pesos ARS enteros, calculados y validados en el servidor
+  subtotal                Int
+  costoEnvio              Int
+  total                   Int
+
+  // Datos de Mercado Pago
+  mercadoPagoPreferenceId String?
+  mercadoPagoPaymentId    String?
+  /// Evita descontar stock dos veces si el webhook llega más de una vez
+  /// para el mismo pago (Mercado Pago no garantiza entrega única).
+  stockDescontado         Boolean       @default(false)
+
+  createdAt               DateTime      @default(now())
+  updatedAt                DateTime     @updatedAt
+
+  items                   ItemPedido[]
+  solicitudArrepentimiento SolicitudArrepentimiento?
+
+  @@map("pedidos")
+}
+
+model ItemPedido {
+  id             String @id @default(cuid())
+  pedidoId       String
+  pedido         Pedido @relation(fields: [pedidoId], references: [id])
+
+  productoId     String
+  varianteId     String?
+  nombre         String
+  /// Precio unitario validado en el servidor al momento de la compra
+  /// (no confiar en precios enviados desde el navegador).
+  precioUnitario Int
+  cantidad       Int
+
+  @@map("items_pedido")
+}
+
+model SolicitudArrepentimiento {
+  id                    String   @id @default(cuid())
+  /// Código único que se le muestra a la persona compradora como comprobante.
+  codigo                String   @unique
+  pedidoId              String?  @unique
+  pedido                Pedido?  @relation(fields: [pedidoId], references: [id])
+
+  /// Si no se pudo vincular a un pedido registrado en el sistema, se guarda
+  /// el número que la persona ingresó manualmente.
+  numeroPedidoIngresado String?
+
+  nombreCompleto        String
+  emailContacto         String
+  motivo                String
+  estado                String   @default("recibida") // recibida | en_revision | resuelta
+
+  createdAt             DateTime @default(now())
+
+  @@map("solicitudes_arrepentimiento")
+}

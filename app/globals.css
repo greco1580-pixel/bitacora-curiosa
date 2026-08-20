@@ -1,0 +1,119 @@
+@layer base {
+  html, body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-fraunces: "Fraunces", serif;
+  --font-archivo: "Archivo", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: #f7f3ea;
+  color: #2a241c;
+  /* textura de papel muy sutil */
+  background-image: radial-gradient(
+      rgba(139, 90, 56, 0.035) 0.6px,
+      transparent 0.6px
+    ),
+    radial-gradient(rgba(139, 90, 56, 0.025) 0.6px, transparent 0.6px);
+  background-size: 26px 26px, 18px 18px;
+  background-position: 0 0, 9px 9px;
+}
+
+::selection {
+  background: #d9cba3;
+  color: #2a241c;
+}
+
+:focus-visible {
+  outline: 2px solid #8b5a38;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* --- Motivo de bitácora: divisor tipo costura de cuaderno --- */
+.stitch-divider {
+  border: none;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    #cdbd93 0,
+    #cdbd93 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  background-size: 12px 1px;
+  background-repeat: repeat-x;
+}
+
+/* --- Etiqueta de entrada de bitácora (número de registro) --- */
+.entry-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: #6e655a;
+}
+
+/* --- Cinta de papel adherida (detalle editorial) --- */
+.tape {
+  position: relative;
+}
+.tape::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 64px;
+  height: 20px;
+  background: rgba(139, 90, 56, 0.14);
+  border: 1px solid rgba(139, 90, 56, 0.18);
+}
+
+.underline-grow {
+  background-image: linear-gradient(#8b5a38, #8b5a38);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.3s ease;
+}
+.underline-grow:hover,
+.underline-grow:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* Forzar renderizado nítido vectorial en todo el DOM */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision !important;
+}
+
+/* Prevenir desenfoque por subpíxeles en contenedores con imágenes */
+img, svg, canvas {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
