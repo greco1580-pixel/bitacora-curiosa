@@ -29,44 +29,49 @@ export default function ProductoInteractivo({ producto }: { producto: Producto }
   };
 
   const handleAgregar = () => {
-  // Ejecuta la función tantas veces como valga 'cantidad'
-  for (let i = 0; i < cantidad; i++) {
-    agregarAlCarrito(producto as any);
-  }
-  if (abrirCarrito) abrirCarrito();
-};
+    for (let i = 0; i < cantidad; i++) {
+      agregarAlCarrito(producto as any);
+    }
+    if (abrirCarrito) abrirCarrito();
+  };
 
   return (
     <div className="flex flex-col justify-center">
       {producto.number && (
-        <span className="font-sans text-xs font-medium uppercase tracking-wider text-sage-dark">
+        <span className="font-sans text-[0.68rem] font-normal uppercase tracking-[0.2em] text-muted/70">
           {producto.number}
         </span>
       )}
-      <h1 className="mt-1 font-serif text-3xl text-ink sm:text-4xl">{producto.nombre}</h1>
-      <p className="mt-3 font-sans text-2xl font-semibold text-ink">{formatoARS(producto.precio)}</p>
+      
+      <h1 className="mt-1 font-serif text-2xl sm:text-3xl font-normal text-ink/85 leading-snug">
+        {producto.nombre}
+      </h1>
+      
+      <p className="mt-2 font-sans text-xl font-light text-ink/80">
+        {formatoARS(producto.precio)}
+      </p>
 
       {producto.shortDescription && (
-        <p className="mt-4 font-sans text-base leading-relaxed text-body">
+        <p className="mt-3 font-sans text-xs sm:text-sm leading-relaxed text-muted/90 font-light">
           {producto.shortDescription}
         </p>
       )}
 
-      <div className="mt-6 flex items-center space-x-4">
+      <div className="mt-6 flex items-center gap-3">
         {/* Control de cantidad */}
-        <div className="flex items-center rounded-md border border-line bg-surface">
+        <div className="flex items-center rounded-lg border border-line/50 bg-surface/80">
           <button
             type="button"
             onClick={() => setCantidad((c) => Math.max(1, c - 1))}
-            className="px-3 py-2 font-sans text-sm font-medium text-ink hover:bg-paper cursor-pointer"
+            className="px-3 py-2.5 font-sans text-xs font-light text-ink/70 hover:text-ink transition-colors cursor-pointer"
           >
             -
           </button>
-          <span className="px-4 font-sans text-sm font-medium text-ink">{cantidad}</span>
+          <span className="px-3 font-sans text-xs font-medium text-ink/80">{cantidad}</span>
           <button
             type="button"
             onClick={() => setCantidad((c) => c + 1)}
-            className="px-3 py-2 font-sans text-sm font-medium text-ink hover:bg-paper cursor-pointer"
+            className="px-3 py-2.5 font-sans text-xs font-light text-ink/70 hover:text-ink transition-colors cursor-pointer"
           >
             +
           </button>
@@ -74,13 +79,12 @@ export default function ProductoInteractivo({ producto }: { producto: Producto }
 
         {/* Botón principal */}
         <button
-  type="button"
-  onClick={handleAgregar}
-  style={{ color: "#F7F5EE", backgroundColor: "#8A9A7B" }}
-  className="flex-1 rounded-md px-6 py-3 font-sans text-sm font-medium transition-colors duration-200 hover:opacity-90 focus:outline-none cursor-pointer text-center block"
->
-  Agregar al carrito
-</button>
+          type="button"
+          onClick={handleAgregar}
+          className="flex-1 rounded-lg px-5 py-2.5 font-sans text-xs uppercase tracking-wider font-medium text-white bg-olive/85 hover:bg-olive transition-all duration-200 shadow-sm cursor-pointer text-center"
+        >
+          Agregar al carrito
+        </button>
       </div>
     </div>
   );

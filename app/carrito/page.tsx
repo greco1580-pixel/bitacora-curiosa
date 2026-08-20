@@ -19,73 +19,67 @@ export default function CarritoPage() {
   const total = subtotal + envio;
 
   return (
-    <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "40px 20px" }}>
-      <h1 style={{ fontFamily: "var(--font-fraunces, serif)", fontSize: "2rem", color: "#2a241c", marginBottom: "30px" }}>
+    <div className="mx-auto max-w-content px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <h1 className="font-serif text-2xl sm:text-3xl text-ink/85 font-normal mb-8">
         Carrito de Compras
       </h1>
 
       {items.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "60px 0" }}>
-          <p style={{ fontFamily: "var(--font-mono, monospace)", color: "#6e655a", marginBottom: "20px" }}>
+        <div className="text-center py-16 space-y-4">
+          <p className="font-sans text-sm text-muted/80 font-light">
             Tu carrito está vacío.
           </p>
           <Link
             href="/tienda"
-            style={{
-              padding: "12px 24px",
-              backgroundColor: "#556b2f",
-              color: "#f7f3ea",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontWeight: 600
-            }}
+            className="inline-block bg-olive/85 hover:bg-olive text-white px-6 py-2.5 rounded-lg font-sans text-xs uppercase tracking-wider transition-all duration-200 shadow-sm"
           >
             Ir a la tienda
           </Link>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "40px" }}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
           {/* Listado de Productos */}
-          <div>
+          <div className="lg:col-span-7 space-y-4">
             {items.map((item, index) => (
               <div
                 key={index}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  borderBottom: "1px solid #d9cba3",
-                  padding: "16px 0"
-                }}
+                className="flex flex-wrap sm:flex-nowrap justify-between items-center gap-4 border-b border-line/30 pb-4 pt-2"
               >
-                <div>
-                  <h3 style={{ margin: "0 0 6px 0", fontFamily: "var(--font-fraunces, serif)", color: "#2a241c" }}>
+                <div className="flex-1 min-w-[180px]">
+                  <h3 className="font-serif text-base text-ink/85 font-normal leading-snug">
                     {item.producto?.nombre || item.producto?.name || "Producto"}
                   </h3>
-                  <p style={{ margin: 0, fontFamily: "var(--font-mono, monospace)", color: "#6e655a" }}>
+                  <p className="font-sans text-xs text-muted/80 font-light mt-1">
                     {formatoARS(item.producto?.precio || 0)}
                   </p>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center rounded-lg border border-line/40 bg-surface/80">
+                    <button
+                      type="button"
+                      onClick={() => actualizarCantidad(index, item.cantidad - 1)}
+                      className="px-2.5 py-1 font-sans text-xs text-ink/70 hover:text-ink transition-colors cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span className="px-2 font-sans text-xs font-medium text-ink/80">
+                      {item.cantidad}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => actualizarCantidad(index, item.cantidad + 1)}
+                      className="px-2.5 py-1 font-sans text-xs text-ink/70 hover:text-ink transition-colors cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+
                   <button
-                    onClick={() => actualizarCantidad(index, item.cantidad - 1)}
-                    style={{ padding: "4px 10px", cursor: "pointer" }}
-                  >
-                    -
-                  </button>
-                  <span style={{ fontFamily: "var(--font-mono, monospace)", fontWeight: 600 }}>
-                    {item.cantidad}
-                  </span>
-                  <button
-                    onClick={() => actualizarCantidad(index, item.cantidad + 1)}
-                    style={{ padding: "4px 10px", cursor: "pointer" }}
-                  >
-                    +
-                  </button>
-                  <button
+                    type="button"
                     onClick={() => eliminarDelCarrito(index)}
-                    style={{ color: "#a00", background: "none", border: "none", cursor: "pointer", marginLeft: "12px" }}
+                    className="font-sans text-xs text-red-800/60 hover:text-red-700 transition-colors ml-2 cursor-pointer"
                   >
                     Eliminar
                   </button>
@@ -94,61 +88,48 @@ export default function CarritoPage() {
             ))}
 
             <button
+              type="button"
               onClick={limpiarCarrito}
-              style={{
-                marginTop: "20px",
-                background: "none",
-                border: "none",
-                color: "#6e655a",
-                cursor: "pointer",
-                textDecoration: "underline",
-                fontSize: "0.85rem"
-              }}
+              className="mt-4 font-sans text-xs text-muted/70 hover:text-ink underline transition-colors cursor-pointer"
             >
               Vaciar carrito
             </button>
           </div>
 
-          {/* Resumen de Compra */}
-          <div style={{ backgroundColor: "#fbf9f5", border: "1px solid #d9cba3", padding: "24px", borderRadius: "8px", height: "fit-content" }}>
-            <h2 style={{ fontFamily: "var(--font-fraunces, serif)", margin: "0 0 20px 0", fontSize: "1.3rem" }}>
+          {/* Resumen de Compra - Colores suaves y legibles */}
+          <div className="lg:col-span-5 bg-surface/50 border border-line/40 p-6 rounded-2xl shadow-sm space-y-4">
+            <h2 className="font-serif text-lg text-ink/85 font-normal pb-2 border-b border-line/30">
               Resumen
             </h2>
 
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
-              <span>Subtotal</span>
-              <strong>{formatoARS(subtotal)}</strong>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
-              <span>Envío</span>
-              <strong>{formatoARS(envio)}</strong>
+            <div className="space-y-2.5 font-sans text-xs text-muted/80">
+              <div className="flex justify-between items-center">
+                <span className="font-light">Subtotal</span>
+                <span className="font-medium text-ink/80">{formatoARS(subtotal)}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="font-light">Envío</span>
+                <span className="font-medium text-ink/80">{formatoARS(envio)}</span>
+              </div>
             </div>
 
-            <hr style={{ borderColor: "#d9cba3", margin: "16px 0" }} />
-
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px", fontSize: "1.2rem" }}>
-              <strong>Total</strong>
-              <strong>{formatoARS(total)}</strong>
+            <div className="pt-3 border-t border-line/30 flex justify-between items-center">
+              <span className="font-sans text-xs font-medium text-ink/80 uppercase tracking-wider">
+                Total
+              </span>
+              <span className="font-serif text-lg text-ink/90 font-medium">
+                {formatoARS(total)}
+              </span>
             </div>
 
             <Link
               href="/checkout"
-              style={{
-                display: "block",
-                textAlign: "center",
-                width: "100%",
-                padding: "14px 0",
-                backgroundColor: "#8A9A7B",
-                color: "#f7f3ea",
-                textDecoration: "none",
-                borderRadius: "4px",
-                fontWeight: 600,
-                boxSizing: "border-box"
-              }}
+              className="block w-full bg-olive/85 hover:bg-olive text-white text-center py-3 rounded-lg font-sans text-xs uppercase tracking-wider transition-all duration-200 shadow-sm mt-4"
             >
               Finalizar Compra
             </Link>
           </div>
+
         </div>
       )}
     </div>

@@ -11,11 +11,11 @@ export default function ProductoPage({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="mx-auto max-w-content px-4 py-10 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
+    <div className="mx-auto max-w-content px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-14 items-start">
         
         {/* Imagen a la izquierda */}
-        <div className="relative aspect-square w-full overflow-hidden rounded-lg border border-line bg-surface">
+        <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-line/40 bg-surface/50 shadow-sm">
           {producto.imagenes?.[0] && (
             <Image
               src={producto.imagenes[0]}
@@ -28,33 +28,42 @@ export default function ProductoPage({ params }: { params: { slug: string } }) {
         </div>
 
         {/* Información e Interacción a la derecha */}
-        <div className="lg:sticky lg:top-8 lg:h-fit">
+        <div className="lg:sticky lg:top-8 lg:h-fit flex flex-col space-y-4">
+          
+          {/* Botones de compra y selector interactivo */}
           <ProductoInteractivo producto={producto} />
 
-          <p className="mt-4 font-sans text-sm leading-relaxed text-muted">
-            {producto.longDescription}
-          </p>
+          {/* Descripción larga suave */}
+          {producto.longDescription && (
+            <p className="font-sans text-xs sm:text-sm leading-relaxed text-muted/80 font-light pt-1">
+              {producto.longDescription}
+            </p>
+          )}
 
-          {/* Bloque QUÉ INCLUYE */}
-          <div className="my-8 border-t border-line pt-6">
-            <h3 className="mb-4 font-sans text-xs font-medium uppercase tracking-wider text-sage-dark">
+          {/* Bloque QUÉ INCLUYE suavizado */}
+          <div className="pt-6 border-t border-line/40 mt-4">
+            <h3 className="mb-3 font-sans text-[0.68rem] font-normal uppercase tracking-[0.18em] text-muted/70">
               QUÉ INCLUYE
             </h3>
-            <dl className="divide-y divide-line/60 font-sans text-sm">
-              <div className="flex justify-between py-2.5">
-                <dt className="text-muted">Cantidad</dt>
-                <dd className="font-medium text-ink">{producto.stickerCount}</dd>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <dt className="text-muted">Formato</dt>
-                <dd className="font-medium text-ink">{producto.format}</dd>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <dt className="text-muted">Material</dt>
-                <dd className="font-medium text-ink">{producto.material}</dd>
-              </div>
-            </dl>
+            
+            <div className="rounded-xl border border-line/30 bg-surface/40 p-3.5 sm:p-4">
+              <dl className="divide-y divide-line/20 font-sans text-xs text-ink/80">
+                <div className="flex justify-between py-2">
+                  <dt className="text-muted/75 font-light">Cantidad</dt>
+                  <dd className="font-medium text-ink/90">{producto.stickerCount}</dd>
+                </div>
+                <div className="flex justify-between py-2">
+                  <dt className="text-muted/75 font-light">Formato</dt>
+                  <dd className="font-medium text-ink/90">{producto.format}</dd>
+                </div>
+                <div className="flex justify-between py-2">
+                  <dt className="text-muted/75 font-light">Material</dt>
+                  <dd className="font-medium text-ink/90">{producto.material}</dd>
+                </div>
+              </dl>
+            </div>
           </div>
+
         </div>
 
       </div>

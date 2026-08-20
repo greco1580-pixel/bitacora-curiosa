@@ -13,7 +13,6 @@ export default function CartDrawer() {
 
   if (!isOpen) return null;
 
-  // Calculamos el subtotal dinámicamente sumando items
   const subtotal = items.reduce((acc, item) => {
     const precio = item.producto?.precio || 0;
     return acc + precio * item.cantidad;
@@ -24,87 +23,68 @@ export default function CartDrawer() {
 
   return (
     <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        display: "flex",
-        justifyContent: "flex-end",
-        backgroundColor: "rgba(0, 0, 0, 0.4)"
-      }}
+      className="fixed inset-0 z-[9999] flex justify-end bg-black/30 backdrop-blur-[2px] transition-opacity"
       onClick={cerrarCarrito}
     >
       <div
-        style={{
-          width: "100%",
-          maxWidth: "420px",
-          height: "100%",
-          backgroundColor: "#fbf9f5",
-          padding: "24px",
-          boxSizing: "border-box",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          overflowY: "auto"
-        }}
+        className="w-full max-w-[380px] sm:max-w-[420px] h-full bg-surface/95 border-l border-line/40 p-6 flex flex-col justify-between overflow-y-auto shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-            <h2 style={{ fontFamily: "var(--font-fraunces, serif)", margin: 0, color: "#2a241c" }}>Tu Carrito</h2>
+          {/* Encabezado */}
+          <div className="flex justify-between items-center mb-6 pb-2 border-b border-line/30">
+            <h2 className="font-serif text-xl text-ink/85 font-normal">Tu Carrito</h2>
             <button
               onClick={cerrarCarrito}
-              style={{ background: "none", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "#2a241c" }}
+              className="text-muted/70 hover:text-ink text-base transition-colors p-1 cursor-pointer"
             >
               ✕
             </button>
           </div>
 
+          {/* Items */}
           {items.length === 0 ? (
-            <p style={{ color: "#6e655a", fontFamily: "var(--font-mono, monospace)", fontSize: "0.9rem" }}>
+            <p className="font-sans text-xs text-muted/80 font-light py-8 text-center">
               El carrito está vacío.
             </p>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div className="flex flex-col gap-4">
               {items.map((item, index) => (
                 <div
                   key={index}
-                  style={{
-                    borderBottom: "1px solid #d9cba3",
-                    paddingBottom: "12px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center"
-                  }}
+                  className="border-b border-line/30 pb-3 flex justify-between items-center gap-2"
                 >
                   <div>
-                    <p style={{ margin: 0, fontWeight: 600, color: "#2a241c" }}>
+                    <p className="font-serif text-sm text-ink/85 font-normal leading-snug">
                       {item.producto?.nombre || item.producto?.name || "Producto"}
                     </p>
-                    <p style={{ margin: "4px 0 0 0", fontSize: "0.85rem", color: "#6e655a" }}>
+                    <p className="font-sans text-xs text-muted/80 font-light mt-1">
                       {formatoARS(item.producto?.precio || 0)}
                     </p>
                   </div>
 
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <button
-                      onClick={() => actualizarCantidad(index, item.cantidad - 1)}
-                      style={{ padding: "2px 8px", cursor: "pointer" }}
-                    >
-                      -
-                    </button>
-                    <span style={{ fontSize: "0.9rem", fontFamily: "var(--font-mono, monospace)" }}>
-                      {item.cantidad}
-                    </span>
-                    <button
-                      onClick={() => actualizarCantidad(index, item.cantidad + 1)}
-                      style={{ padding: "2px 8px", cursor: "pointer" }}
-                    >
-                      +
-                    </button>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center rounded-lg border border-line/40 bg-surface/80">
+                      <button
+                        onClick={() => actualizarCantidad(index, item.cantidad - 1)}
+                        className="px-2 py-0.5 font-sans text-xs text-ink/70 hover:text-ink transition-colors cursor-pointer"
+                      >
+                        -
+                      </button>
+                      <span className="px-2 font-sans text-xs font-medium text-ink/80">
+                        {item.cantidad}
+                      </span>
+                      <button
+                        onClick={() => actualizarCantidad(index, item.cantidad + 1)}
+                        className="px-2 py-0.5 font-sans text-xs text-ink/70 hover:text-ink transition-colors cursor-pointer"
+                      >
+                        +
+                      </button>
+                    </div>
+
                     <button
                       onClick={() => eliminarDelCarrito(index)}
-                      style={{ color: "#a00", background: "none", border: "none", cursor: "pointer", marginLeft: "8px" }}
+                      className="font-sans text-xs text-red-800/50 hover:text-red-700 transition-colors ml-1 cursor-pointer"
                     >
                       ✕
                     </button>
@@ -115,19 +95,25 @@ export default function CartDrawer() {
           )}
         </div>
 
+        {/* Resumen final e Iniciar compra */}
         {items.length > 0 && (
-          <div style={{ borderTop: "2px solid #d9cba3", paddingTop: "16px", marginTop: "20px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", fontSize: "0.9rem" }}>
-              <span>Subtotal:</span>
-              <strong>{formatoARS(subtotal)}</strong>
+          <div className="border-t border-line/40 pt-4 mt-6 space-y-3">
+            <div className="flex justify-between items-center font-sans text-xs text-muted/80 font-light">
+              <span>Subtotal</span>
+              <span className="font-medium text-ink/80">{formatoARS(subtotal)}</span>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", fontSize: "0.9rem" }}>
-              <span>Envío estimado:</span>
-              <strong>{formatoARS(envio)}</strong>
+            <div className="flex justify-between items-center font-sans text-xs text-muted/80 font-light">
+              <span>Envío estimado</span>
+              <span className="font-medium text-ink/80">{formatoARS(envio)}</span>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "16px", fontSize: "1.1rem" }}>
-              <strong>Total:</strong>
-              <strong>{formatoARS(total)}</strong>
+
+            <div className="flex justify-between items-center pt-2 border-t border-line/20">
+              <span className="font-sans text-xs font-medium uppercase tracking-wider text-ink/80">
+                Total
+              </span>
+              <span className="font-serif text-base text-ink/90 font-medium">
+                {formatoARS(total)}
+              </span>
             </div>
 
             <button
@@ -135,18 +121,7 @@ export default function CartDrawer() {
                 cerrarCarrito();
                 router.push("/carrito");
               }}
-              style={{
-                width: "100%",
-                padding: "12px 0",
-                backgroundColor: "#8A9A7B",
-                color: "#f7f3ea",
-                border: "none",
-                borderRadius: "4px",
-                fontWeight: 600,
-                cursor: "pointer",
-                textTransform: "uppercase",
-                letterSpacing: "0.1em"
-              }}
+              className="w-full bg-olive/85 hover:bg-olive text-white py-3 rounded-lg font-sans text-xs uppercase tracking-wider transition-all duration-200 shadow-sm cursor-pointer mt-2"
             >
               Iniciar Compra
             </button>
