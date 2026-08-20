@@ -1051,6 +1051,13 @@ html, body {
 .bg-surface\/95 {
   background-color: rgb(240 236 231 / 0.95);
 }
+.bg-\[\#93a085\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(147 160 133 / var(--tw-bg-opacity, 1));
+}
+.bg-\[\#f4f2eb\]\/60 {
+  background-color: rgb(244 242 235 / 0.6);
+}
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -1498,6 +1505,9 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.accent-\[\#93a085\] {
+  accent-color: #93a085;
+}
 .opacity-15 {
   opacity: 0.15;
 }
@@ -1797,6 +1807,10 @@ img, svg, canvas {
   --tw-border-opacity: 1;
   border-color: rgb(138 154 123 / var(--tw-border-opacity, 1));
 }
+.focus\:border-\[\#93a085\]:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(147 160 133 / var(--tw-border-opacity, 1));
+}
 .focus\:px-4:focus {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -2070,6 +2084,12 @@ img, svg, canvas {
   }
   .lg\:col-span-7 {
     grid-column: span 7 / span 7;
+  }
+  .lg\:block {
+    display: block;
+  }
+  .lg\:hidden {
+    display: none;
   }
   .lg\:h-fit {
     height: -moz-fit-content;
