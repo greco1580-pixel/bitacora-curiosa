@@ -33,7 +33,7 @@ export default function ProductCard({ producto, variant }: { producto: any; vari
         padding: "16px",
         display: "flex",
         flexDirection: "column",
-        justify: "space-between",
+        justifyContent: "space-between",
         height: "100%"
       }}
     >
