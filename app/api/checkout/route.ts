@@ -9,8 +9,7 @@ import { RETIRO_PUNTO } from "@/lib/commerce-config";
 import { obtenerClienteMercadoPago, obtenerUrlBase } from "@/lib/mercadopago";
 
 // Todos los precios y el stock se vuelven a validar acá, en el servidor.
-// Nunca se confía en montos ni cantidades que llegan desde el navegador
-// (ver punto 8 y 10 del brief).
+// Nunca se confía en montos ni cantidades que llegan desde el navegador.
 
 const itemSchema = z.object({
   productoId: z.string().min(1),
@@ -69,8 +68,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 1) Revalidar cada ítem contra el catálogo real (precio, existencia)
-  //    y contra el stock vivo en la base de datos.
+  // 1) Revalidar cada ítem contra el catálogo real y el stock vivo en la base de datos.
   const stocksDb = await prisma.productoStock.findMany({
     where: { productoId: { in: items.map((i) => i.productoId) } }
   });
@@ -93,9 +91,8 @@ export async function POST(request: NextRequest) {
     }
 
     const stockRow = stockPorProducto.get(producto.id);
-    // Si todavía no se cargó el stock en la base (no se corrió el seed),
-    // usamos el stock del catálogo como último recurso, pero avisamos.
-    let stockDisponible: number;
+    let stockDisponible = 0;
+
     if (item.varianteId) {
       const variante = producto.variantes?.find((v) => v.id === item.varianteId);
       if (!variante) {
@@ -103,9 +100,9 @@ export async function POST(request: NextRequest) {
         continue;
       }
       const stockVariantesDb = (stockRow?.stockVariantes as Record<string, number>) ?? {};
-      stockDisponible = stockRow ? stockVariantesDb[item.varianteId] ?? 0 : variante.stock;
+      stockDisponible = stockRow ? (stockVariantesDb[item.varianteId] ?? 0) : (variante.stock ?? 0);
     } else {
-      stockDisponible = stockRow ? stockRow.stock : producto.stock;
+      stockDisponible = stockRow ? (stockRow.stock ?? 0) : (producto.stock ?? 0);
     }
 
     if (item.cantidad > stockDisponible) {
@@ -119,7 +116,7 @@ export async function POST(request: NextRequest) {
       productoId: producto.id,
       varianteId: item.varianteId,
       nombre: producto.nombre,
-      precioUnitario: producto.precio, // precio autoritativo, nunca el del cliente
+      precioUnitario: producto.precio,
       cantidad: item.cantidad
     });
   }
@@ -133,7 +130,7 @@ export async function POST(request: NextRequest) {
     0
   );
 
-  // 2) Calcular el envío en el servidor (nunca confiar en un total armado en el cliente).
+  // 2) Calcular el envío en el servidor
   let costoEnvio = 0;
   if (metodoEntrega === "ENVIO" && datosEnvio) {
     const tarifa = calcularCostoEnvio(datosEnvio.provincia);
@@ -149,13 +146,11 @@ export async function POST(request: NextRequest) {
     }
     costoEnvio = tarifa;
   }
-  // metodoEntrega === "RETIRO" → costoEnvio queda en 0 (RETIRO_PUNTO.costo)
   void RETIRO_PUNTO;
 
   const total = subtotal + costoEnvio;
 
   // 3) Registrar el pedido como PENDIENTE antes de redirigir a Mercado Pago
-  //    (la creación de la preferencia de pago se conecta en la próxima fase).
   const referenciaExterna = `bc_${nanoid(12)}`;
 
   const pedido = await prisma.pedido.create({
@@ -198,12 +193,7 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * Intenta crear la preferencia de pago de Mercado Pago para el pedido ya
- * registrado. Si no hay credenciales configuradas, o si la llamada a
- * Mercado Pago falla, el pedido queda igual como PENDIENTE en la base
- * (ya se creó antes de esto) y se le avisa a la persona compradora que el
- * pago se va a coordinar manualmente — nunca se afirma que el pago
- * funciona si no es cierto.
+ * Intenta crear la preferencia de pago de Mercado Pago para el pedido ya registrado.
  */
 async function crearPreferenciaMercadoPago(
   pedido: { id: string; referenciaExterna: string; email: string },
@@ -238,7 +228,7 @@ async function crearPreferenciaMercadoPago(
 
     const preferencia = await new Preference(client).create({
       body: {
-        items: itemsPreferencia,
+        items: itemsPreferencia as any,
         payer: { email: pedido.email },
         external_reference: pedido.referenciaExterna,
         metadata: { pedidoId: pedido.id },
