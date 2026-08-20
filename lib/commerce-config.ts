@@ -4,7 +4,7 @@
 // detalle de qué hay que revisar (incluida revisión legal de los textos).
 
 export const RETIRO_PUNTO = {
-  descripcion: "[DATOS_DEL_PUNTO_DE_RETIRO]",
+  descripcion: "cerca de la estación de Villa Bosch",
   costo: 0
 };
 
