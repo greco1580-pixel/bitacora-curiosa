@@ -119,15 +119,14 @@ export default function CheckoutClient() {
   if (resultado) {
     return (
       <div className="mx-auto max-w-content px-4 py-16 sm:px-6 lg:px-8">
-        <p className="entry-label mb-2 uppercase text-xs tracking-wider text-grisCalido">Pedido registrado</p>
-        <h1 className="mb-4 font-serif text-3xl text-negroSuave">¡Gracias, ya recibimos tu pedido!</h1>
-        <p className="font-sans text-sm text-grisCalido">
-          Número de referencia: <span className="font-mono text-negroSuave">{resultado.referenciaExterna}</span>
+        <h1 className="font-serif text-2xl text-[#6b635b] mb-2">¡Gracias, ya recibimos tu pedido!</h1>
+        <p className="font-sans text-xs text-[#8c827a]">
+          Número de referencia: <span className="font-mono text-[#2d2a26]">{resultado.referenciaExterna}</span>
         </p>
-        <p className="mt-4 font-sans text-sm text-grisCalido max-w-prose">{resultado.mensaje}</p>
+        <p className="mt-4 font-sans text-xs text-[#8c827a] max-w-prose">{resultado.mensaje}</p>
         <Link
           href="/tienda"
-          className="mt-8 inline-block rounded-xl bg-[#93a085] px-8 py-3.5 font-sans text-xs font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90"
+          className="mt-8 inline-block rounded-2xl bg-[#93a085] px-8 py-3 font-sans text-xs font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90"
         >
           Volver a la tienda
         </Link>
@@ -138,10 +137,10 @@ export default function CheckoutClient() {
   if (cargado && items?.length === 0) {
     return (
       <div className="mx-auto max-w-content px-4 py-16 sm:px-6 lg:px-8">
-        <h1 className="font-serif text-3xl text-negroSuave mb-4">Tu carrito está vacío</h1>
+        <h1 className="font-serif text-2xl text-[#6b635b] mb-4">Tu carrito está vacío</h1>
         <Link
           href="/tienda"
-          className="mt-4 inline-block rounded-xl bg-[#93a085] px-8 py-3.5 font-sans text-xs font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90"
+          className="mt-4 inline-block rounded-2xl bg-[#93a085] px-8 py-3 font-sans text-xs font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90"
         >
           Ver tienda
         </Link>
@@ -152,26 +151,24 @@ export default function CheckoutClient() {
   const total = subtotal + (costoEnvioEstimado ?? 0);
 
   return (
-    <div className="mx-auto max-w-content px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mb-10">
-        <p className="entry-label mb-1 text-xs uppercase tracking-widest text-grisCalido font-medium">
-          Último paso
-        </p>
-        <h1 className="font-serif text-3xl sm:text-4xl text-negroSuave">Checkout</h1>
+    <div className="mx-auto max-w-content px-4 py-8 sm:px-6 lg:px-8">
+      {/* Título idéntico en escala al "Carrito de Compras" */}
+      <div className="mb-8">
+        <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#6b635b]">Checkout</h1>
       </div>
 
       <div className="grid gap-12 lg:grid-cols-[1fr_360px]">
-        <form onSubmit={manejarEnvio} className="flex flex-col gap-10" noValidate>
-          {/* Tus Datos */}
-          <section className="flex flex-col gap-5">
-            <h2 className="font-serif text-2xl text-negroSuave">Tus datos</h2>
+        <form id="checkout-form" onSubmit={manejarEnvio} className="flex flex-col gap-8" noValidate>
+          {/* Seccion: Tus Datos */}
+          <section className="flex flex-col gap-4">
+            <h2 className="font-serif text-xl font-normal text-[#6b635b]">Tus datos</h2>
             
-            <div className="grid gap-5 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               <Campo id="nombre" label="Nombre" required />
               <Campo id="apellido" label="Apellido" required />
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               <Campo id="email" label="Email" type="email" required />
               <Campo id="telefono" label="Teléfono" type="tel" required />
             </div>
@@ -179,12 +176,12 @@ export default function CheckoutClient() {
             <Campo id="dni" label="DNI (opcional)" />
           </section>
 
-          {/* Entrega */}
-          <section className="flex flex-col gap-6 pt-4 border-t border-beigeLine/50">
-            <h2 className="font-serif text-2xl text-negroSuave">Entrega</h2>
+          {/* Seccion: Entrega */}
+          <section className="flex flex-col gap-4 pt-4 border-t border-[#e2ded6]/60">
+            <h2 className="font-serif text-xl font-normal text-[#6b635b]">Entrega</h2>
             
-            <div className="flex gap-6 font-sans text-sm text-negroSuave" role="radiogroup" aria-label="Método de entrega">
-              <label className="flex items-center gap-2.5 cursor-pointer">
+            <div className="flex gap-6 font-sans text-xs text-[#8c827a]" role="radiogroup" aria-label="Método de entrega">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="metodoEntrega"
@@ -192,12 +189,12 @@ export default function CheckoutClient() {
                   onChange={() => setMetodoEntrega("ENVIO")}
                   className="accent-[#93a085]"
                 />
-                <span className={metodoEntrega === "ENVIO" ? "text-negroSuave font-medium" : "text-grisCalido"}>
+                <span className={metodoEntrega === "ENVIO" ? "text-[#2d2a26] font-medium" : "text-[#8c827a]"}>
                   Envío a domicilio
                 </span>
               </label>
 
-              <label className="flex items-center gap-2.5 cursor-pointer">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="metodoEntrega"
@@ -205,20 +202,20 @@ export default function CheckoutClient() {
                   onChange={() => setMetodoEntrega("RETIRO")}
                   className="accent-[#93a085]"
                 />
-                <span className={metodoEntrega === "RETIRO" ? "text-negroSuave font-medium" : "text-grisCalido"}>
+                <span className={metodoEntrega === "RETIRO" ? "text-[#2d2a26] font-medium" : "text-[#8c827a]"}>
                   Retiro sin cargo
                 </span>
               </label>
             </div>
 
             {metodoEntrega === "RETIRO" ? (
-              <p className="font-sans text-sm text-grisCalido py-2">
-                Punto de retiro: <span className="text-negroSuave font-medium">{RETIRO_PUNTO.descripcion}</span>. Coordinamos el horario por email.
+              <p className="font-sans text-xs text-[#8c827a] py-1">
+                Punto de retiro: <span className="text-[#2d2a26] font-medium">{RETIRO_PUNTO.descripcion}</span>. Coordinamos el horario por email.
               </p>
             ) : (
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-4">
                 <div>
-                  <label htmlFor="provincia" className="mb-1.5 block font-sans text-xs text-grisCalido">
+                  <label htmlFor="provincia" className="mb-1 block font-sans text-xs text-[#8c827a]">
                     Provincia
                   </label>
                   <select
@@ -227,7 +224,7 @@ export default function CheckoutClient() {
                     required
                     value={provincia}
                     onChange={(e) => setProvincia(e.target.value)}
-                    className="w-full rounded-xl border border-beigeLine/80 bg-transparent px-3.5 py-2.5 font-sans text-sm text-negroSuave focus:border-[#93a085] focus:outline-none transition-colors"
+                    className="w-full rounded-xl border border-[#d8d3c9] !bg-transparent px-3 py-2 font-sans text-xs text-[#2d2a26] focus:border-[#93a085] focus:outline-none transition-colors"
                   >
                     <option value="">Elegí una provincia</option>
                     {PROVINCIAS_ARGENTINA.map((p) => (
@@ -238,12 +235,12 @@ export default function CheckoutClient() {
                   </select>
                 </div>
 
-                <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-4 sm:grid-cols-2">
                   <Campo id="localidad" label="Localidad" required />
                   <Campo id="codigoPostal" label="Código postal" required />
                 </div>
 
-                <div className="grid gap-5 sm:grid-cols-[1fr_140px]">
+                <div className="grid gap-4 sm:grid-cols-[1fr_140px]">
                   <Campo id="direccion" label="Dirección" required />
                   <Campo id="numero" label="Número" required />
                 </div>
@@ -252,7 +249,7 @@ export default function CheckoutClient() {
                 <Campo id="indicaciones" label="Indicaciones de entrega (opcional)" />
 
                 {provincia && costoEnvioEstimado === null && (
-                  <p className="font-sans text-sm text-grisCalido py-2">
+                  <p className="font-sans text-xs text-[#8c827a] py-1">
                     Aún no tenemos una tarifa calculada para {provincia}. Coordinamos el costo por email.
                   </p>
                 )}
@@ -261,7 +258,7 @@ export default function CheckoutClient() {
           </section>
 
           {error && (
-            <p role="alert" className="font-sans text-sm text-tierraDark">
+            <p role="alert" className="font-sans text-xs text-red-700">
               {error}
               {coordinacionManual && " Completá tus datos igual: te vamos a escribir para coordinar."}
             </p>
@@ -271,30 +268,30 @@ export default function CheckoutClient() {
             <button
               type="submit"
               disabled={enviando}
-              className="w-full rounded-2xl bg-[#93a085] py-4 font-sans text-xs font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+              className="w-full rounded-2xl bg-[#93a085] py-3.5 font-sans text-xs font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90 disabled:opacity-60"
             >
               {enviando ? "PROCESANDO..." : "PAGAR AHORA"}
             </button>
           </div>
         </form>
 
-        {/* Resumen - Fiel al carrito */}
-        <aside className="h-fit rounded-2xl border border-beigeLine/70 bg-[#f4f2eb]/60 p-6 sm:p-8">
-          <h2 className="font-serif text-2xl text-negroSuave mb-6">Resumen</h2>
+        {/* Tarjeta Resumen: Mismos colores y tamaño exacto del Carrito */}
+        <aside className="h-fit rounded-2xl border border-[#e5e0d8] bg-[#f2eee9]/80 p-6 sm:p-7">
+          <h2 className="font-serif text-xl font-normal text-[#6b635b] mb-5">Resumen</h2>
           
-          <ul className="flex flex-col gap-3 pb-6 border-b border-beigeLine/60">
+          <ul className="flex flex-col gap-2.5 pb-5 border-b border-[#e2ded6]">
             {(items || []).map((item: any) => {
               const producto = productos.find((p) => p.id === (item.productoId || item.id));
               if (!producto) return null;
               return (
                 <li
                   key={`${item.productoId || item.id}-${item.varianteId ?? ""}`}
-                  className="flex justify-between items-center font-sans text-sm"
+                  className="flex justify-between items-center font-sans text-xs"
                 >
-                  <span className="text-grisCalido">
-                    {producto.nombre} <span className="text-xs text-grisCalido/70">× {item.cantidad}</span>
+                  <span className="text-[#8c827a]">
+                    {producto.nombre} <span className="text-[11px] text-[#8c827a]/70">× {item.cantidad}</span>
                   </span>
-                  <span className="font-mono text-negroSuave text-sm">
+                  <span className="font-serif text-[#2d2a26]">
                     {formatoARS(producto.precio * item.cantidad)}
                   </span>
                 </li>
@@ -302,32 +299,29 @@ export default function CheckoutClient() {
             })}
           </ul>
 
-          <div className="mt-4 flex justify-between font-sans text-sm text-grisCalido">
+          <div className="mt-3.5 flex justify-between font-sans text-xs text-[#8c827a]">
             <span>Subtotal</span>
-            <span className="font-mono text-negroSuave">{formatoARS(subtotal)}</span>
+            <span className="font-serif text-[#2d2a26]">{formatoARS(subtotal)}</span>
           </div>
 
-          <div className="mt-3 flex justify-between font-sans text-sm text-grisCalido pb-6 border-b border-beigeLine/60">
+          <div className="mt-2.5 flex justify-between font-sans text-xs text-[#8c827a] pb-5 border-b border-[#e2ded6]">
             <span>Envío</span>
-            <span className="font-mono text-negroSuave">
+            <span className="font-serif text-[#2d2a26]">
               {costoEnvioEstimado === null ? "A coordinar" : formatoARS(costoEnvioEstimado)}
             </span>
           </div>
 
-          <div className="mt-6 flex justify-between items-baseline font-sans text-negroSuave">
-            <span className="text-xs uppercase tracking-wider text-grisCalido font-medium">TOTAL</span>
-            <span className="font-serif text-2xl font-normal">{formatoARS(total)}</span>
+          <div className="mt-5 flex justify-between items-baseline">
+            <span className="font-sans text-[11px] uppercase tracking-wider text-[#8c827a] font-medium">TOTAL</span>
+            <span className="font-serif text-xl font-normal text-[#2d2a26]">{formatoARS(total)}</span>
           </div>
 
-          <div className="mt-6 hidden lg:block">
+          <div className="mt-5 hidden lg:block">
             <button
               type="submit"
-              onClick={(e) => {
-                const form = document.querySelector("form");
-                if (form) form.requestSubmit();
-              }}
+              form="checkout-form"
               disabled={enviando}
-              className="w-full rounded-2xl bg-[#93a085] py-4 font-sans text-xs font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+              className="w-full rounded-2xl bg-[#93a085] py-3.5 font-sans text-xs font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90 disabled:opacity-60"
             >
               {enviando ? "PROCESANDO..." : "PAGAR AHORA"}
             </button>
@@ -351,7 +345,7 @@ function Campo({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block font-sans text-xs text-grisCalido">
+      <label htmlFor={id} className="mb-1 block font-sans text-xs text-[#8c827a]">
         {label}
       </label>
       <input
@@ -359,7 +353,7 @@ function Campo({
         name={id}
         type={type}
         required={required}
-        className="w-full rounded-xl border border-beigeLine/80 bg-transparent px-3.5 py-2.5 font-sans text-sm text-negroSuave focus:border-[#93a085] focus:outline-none transition-colors"
+        className="w-full rounded-xl border border-[#d8d3c9] !bg-transparent px-3 py-2 font-sans text-xs text-[#2d2a26] focus:border-[#93a085] focus:outline-none transition-colors"
       />
     </div>
   );
