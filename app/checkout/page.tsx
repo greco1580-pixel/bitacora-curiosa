@@ -48,11 +48,11 @@ export default function CheckoutPage() {
   const styleInput = {
     width: "100%",
     padding: "10px 12px",
-    border: "1px solid #e2dacd",
+    border: "1px solid #e5dfd3",
     borderRadius: "6px",
-    backgroundColor: "#faf7f2",
+    backgroundColor: "#fbf9f5",
     color: "#3a342c",
-    fontSize: "0.88rem",
+    fontSize: "0.85rem",
     outline: "none",
     boxSizing: "border-box" as const
   };
@@ -61,25 +61,25 @@ export default function CheckoutPage() {
     display: "block",
     fontSize: "0.82rem",
     marginBottom: "6px",
-    color: "#5c5449",
-    fontWeight: 500
+    color: "#6e655a",
+    fontWeight: 400
   };
 
   return (
-    <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "40px 20px" }}>
+    <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "40px 20px" }}>
       <p style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "#8c8275", textTransform: "uppercase" }}>
         Último paso
       </p>
-      <h1 style={{ fontFamily: "var(--font-fraunces, serif)", fontSize: "2.2rem", color: "#3a342c", marginBottom: "30px", fontWeight: 400 }}>
+      <h1 style={{ fontFamily: "var(--font-fraunces, serif)", fontSize: "2rem", color: "#3a342c", marginBottom: "32px", fontWeight: 400 }}>
         Checkout
       </h1>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 360px", gap: "40px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "40px" }}>
         {/* Formulario */}
         <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
           {/* Datos Personales */}
           <div>
-            <h2 style={{ fontFamily: "var(--font-fraunces, serif)", fontSize: "1.2rem", color: "#3a342c", marginBottom: "16px", fontWeight: 400 }}>
+            <h2 style={{ fontFamily: "var(--font-fraunces, serif)", fontSize: "1.15rem", color: "#3a342c", marginBottom: "16px", fontWeight: 400 }}>
               Tus datos
             </h2>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
@@ -110,33 +110,33 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <hr style={{ borderColor: "#eae3d2", borderTop: "1px solid #eae3d2", borderBottom: "none", margin: "10px 0" }} />
+          <hr style={{ borderColor: "#eae3d2", borderTop: "1px solid #eae3d2", borderBottom: "none", margin: "8px 0" }} />
 
           {/* Forma de Entrega */}
           <div>
-            <h2 style={{ fontFamily: "var(--font-fraunces, serif)", fontSize: "1.2rem", color: "#3a342c", marginBottom: "16px", fontWeight: 400 }}>
+            <h2 style={{ fontFamily: "var(--font-fraunces, serif)", fontSize: "1.15rem", color: "#3a342c", marginBottom: "16px", fontWeight: 400 }}>
               Entrega
             </h2>
 
             <div style={{ display: "flex", gap: "24px", marginBottom: "20px" }}>
-              <label style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", fontSize: "0.88rem", color: "#3a342c" }}>
+              <label style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", fontSize: "0.85rem", color: "#3a342c" }}>
                 <input
                   type="radio"
                   name="entrega"
                   checked={tipoEntrega === "envio"}
                   onChange={() => setTipoEntrega("envio")}
-                  style={{ accentColor: "#8A9A7B" }}
+                  style={{ accentColor: "#8c8275" }}
                 />
                 Envío a domicilio
               </label>
 
-              <label style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", fontSize: "0.88rem", color: "#3a342c" }}>
+              <label style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", fontSize: "0.85rem", color: "#3a342c" }}>
                 <input
                   type="radio"
                   name="entrega"
                   checked={tipoEntrega === "retiro"}
                   onChange={() => setTipoEntrega("retiro")}
-                  style={{ accentColor: "#8A9A7B" }}
+                  style={{ accentColor: "#8c8275" }}
                 />
                 Retiro sin cargo
               </label>
@@ -183,12 +183,11 @@ export default function CheckoutPage() {
                 </div>
               </div>
             ) : (
-              /* Punto de Retiro Detallado */
-              <div style={{ border: "1px dashed #dcd4c3", padding: "16px", borderRadius: "6px", backgroundColor: "#f9f7f2", color: "#3a342c" }}>
-                <p style={{ margin: "0 0 6px 0", fontWeight: 500, fontSize: "0.9rem" }}>Punto de retiro en Villa Bosch:</p>
+              <div style={{ border: "1px dashed #dcd4c3", padding: "16px", borderRadius: "6px", backgroundColor: "#fbf9f5", color: "#3a342c" }}>
+                <p style={{ margin: "0 0 6px 0", fontWeight: 500, fontSize: "0.88rem" }}>Punto de retiro en Villa Bosch:</p>
                 <p style={{ margin: "0 0 4px 0", fontSize: "0.85rem", color: "#6e655a" }}>Showroom</p>
                 <p style={{ margin: "0 0 10px 0", fontSize: "0.82rem", color: "#8c8275" }}>Horarios de atención: Lunes a Viernes de 10:00 a 18:00 hs.</p>
-                <p style={{ margin: 0, fontSize: "0.8rem", color: "#6b7a5e", fontWeight: 500 }}>
+                <p style={{ margin: 0, fontSize: "0.8rem", color: "#6e655a", fontWeight: 500 }}>
                   Te enviaremos la dirección exacta por email una vez confirmado el pago.
                 </p>
               </div>
@@ -196,26 +195,24 @@ export default function CheckoutPage() {
           </div>
         </form>
 
-        {/* Resumen de Compra */}
+        {/* Resumen de Compra - Igual que CartDrawer */}
         <div style={{ backgroundColor: "#fbf9f5", border: "1px solid #e5dfd3", padding: "24px", borderRadius: "8px", height: "fit-content" }}>
-          <h2 style={{ fontFamily: "var(--font-fraunces, serif)", margin: "0 0 20px 0", fontSize: "1.25rem", color: "#3a342c", fontWeight: 400 }}>
+          <h2 style={{ fontFamily: "var(--font-fraunces, serif)", margin: "0 0 18px 0", fontSize: "1.2rem", color: "#3a342c", fontWeight: 400 }}>
             Resumen
           </h2>
 
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px", fontSize: "0.88rem", color: "#6e655a" }}>
-            <span>Subtotal</span>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", fontSize: "0.85rem", color: "#6e655a" }}>
+            <span>Subtotal:</span>
             <span style={{ color: "#3a342c", fontWeight: 500 }}>{formatoARS(subtotal)}</span>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px", fontSize: "0.88rem", color: "#6e655a" }}>
-            <span>Envío</span>
-            <span style={{ color: "#3a342c", fontWeight: 500 }}>{tipoEntrega === "envio" ? formatoARS(costoEnvioActual) : "Gratis"}</span>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", fontSize: "0.85rem", color: "#6e655a" }}>
+            <span>Envío:</span>
+            <span style={{ color: "#3a342c", fontWeight 500 }}>{tipoEntrega === "envio" ? formatoARS(costoEnvioActual) : "Gratis"}</span>
           </div>
 
-          <hr style={{ borderColor: "#eae3d2", borderTop: "1px solid #eae3d2", borderBottom: "none", margin: "16px 0" }} />
-
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px", fontSize: "1.05rem" }}>
-            <span style={{ color: "#3a342c", fontWeight: 600, textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em" }}>Total</span>
+          <div style={{ display: "flex", justifyContent: "space-between", margin: "14px 0 18px 0", paddingTop: "10px", borderTop: "1px solid #eae3d2", fontSize: "1rem" }}>
+            <span style={{ color: "#3a342c", fontWeight: 600, textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em" }}>Total:</span>
             <span style={{ color: "#2a241c", fontWeight: 600, fontFamily: "var(--font-fraunces, serif)" }}>{formatoARS(total)}</span>
           </div>
 
@@ -224,8 +221,8 @@ export default function CheckoutPage() {
             style={{
               width: "100%",
               padding: "12px 0",
-              backgroundColor: "#8A9A7B",
-              color: "#FFFFFF",
+              backgroundColor: "#2a241c",
+              color: "#fbf9f5",
               border: "none",
               borderRadius: "8px",
               fontWeight: 500,
