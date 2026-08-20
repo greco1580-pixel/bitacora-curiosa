@@ -36,7 +36,7 @@ export default function TiendaClient() {
       lista = lista.filter(
         (p) =>
           p.nombre.toLowerCase().includes(q) ||
-          p.descripcionCorta.toLowerCase().includes(q)
+          (p as any).descripcionCorta?.toLowerCase().includes(q)
       );
     }
 
