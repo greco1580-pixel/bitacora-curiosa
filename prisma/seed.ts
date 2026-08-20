@@ -16,7 +16,7 @@ async function main() {
   for (const producto of productos) {
     const stockVariantes: Record<string, number> = {};
     for (const variante of producto.variantes ?? []) {
-      stockVariantes[variante.id] = variante.stock;
+      stockVariantes[variante.id] = variante.stock ?? 0;
     }
 
     await prisma.productoStock.upsert({
