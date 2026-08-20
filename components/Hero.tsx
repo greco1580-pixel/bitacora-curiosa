@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="mx-auto max-w-[1200px] px-6 pt-10 pb-12 md:pt-20 md:pb-32 flex flex-col md:flex-row items-center justify-between gap-10 lg:gap-16">
+    <section className="mx-auto max-w-[1200px] px-6 pt-8 pb-12 md:pt-20 md:pb-32 flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-16">
       
       {/* Columna de Texto */}
       <div className="flex-1 w-full text-center md:text-left flex flex-col items-center md:items-start">
@@ -14,28 +14,28 @@ export default function Hero() {
           Bitácora N.º 001 — Registro abierto
         </p>
 
-        {/* Título con más presencia y escala en mobile */}
-        <h1 className="font-[family-name:var(--font-fraunces,serif)] text-ink text-5xl sm:text-6xl md:text-7xl leading-[1.02] mb-6 font-normal tracking-tight">
+        {/* Título: "Curiosa" con tamaño ligeramente mayor */}
+        <h1 className="font-[family-name:var(--font-fraunces,serif)] text-ink text-5xl sm:text-6xl md:text-7xl leading-[0.98] mb-5 font-normal tracking-tight">
           <span>Bitácora</span>
-          <span className="block italic text-olive/90 md:ml-[15%]">Curiosa</span>
+          <span className="block italic text-olive/90 text-[1.15em] md:ml-[15%]">Curiosa</span>
         </h1>
 
         {/* Bajada sutil */}
-        <p className="text-xs sm:text-sm md:text-base text-body/75 italic mb-8 leading-[1.6] max-w-[340px] md:max-w-[400px]">
+        <p className="text-xs sm:text-sm md:text-base text-body/75 italic mb-6 leading-[1.6] max-w-[340px] md:max-w-[400px]">
           Ideas y objetos para cerebros que registran demasiado.
         </p>
 
-        {/* Botones */}
-        <div className="flex gap-3 justify-center md:justify-start w-full sm:w-auto">
+        {/* Botones más pequeños y compactos */}
+        <div className="flex gap-2.5 justify-center md:justify-start w-full sm:w-auto">
           <Link
             href="/tienda"
-            className="px-5 py-2.5 text-[0.8rem] bg-olive hover:bg-olive-dark text-white rounded transition-colors tracking-wide font-medium"
+            className="px-3.5 py-1.5 text-[0.72rem] bg-olive hover:bg-olive-dark text-white rounded transition-colors tracking-wide font-medium"
           >
             Explorar la tienda
           </Link>
           <Link
             href="/sobre-bitacora-curiosa"
-            className="px-5 py-2.5 text-[0.8rem] bg-transparent text-ink/80 border border-beigeLine hover:bg-surface rounded transition-colors tracking-wide"
+            className="px-3.5 py-1.5 text-[0.72rem] bg-transparent text-ink/80 border border-beigeLine hover:bg-surface rounded transition-colors tracking-wide"
           >
             Abrir la Bitácora
           </Link>
