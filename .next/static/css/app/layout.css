@@ -656,6 +656,9 @@ html, body {
 .h-\[220px\] {
   height: 220px;
 }
+.h-\[280px\] {
+  height: 280px;
+}
 .max-h-60 {
   max-height: 15rem;
 }
@@ -691,6 +694,9 @@ html, body {
 }
 .w-\[220px\] {
   width: 220px;
+}
+.w-\[280px\] {
+  width: 280px;
 }
 .min-w-\[180px\] {
   min-width: 180px;
@@ -1358,6 +1364,9 @@ html, body {
 .text-\[11px\] {
   font-size: 11px;
 }
+.text-\[0\.8rem\] {
+  font-size: 0.8rem;
+}
 .font-light {
   font-weight: 300;
 }
@@ -1393,6 +1402,9 @@ html, body {
 }
 .leading-\[1\.05\] {
   line-height: 1.05;
+}
+.leading-\[1\.02\] {
+  line-height: 1.02;
 }
 .tracking-\[0\.15em\] {
   letter-spacing: 0.15em;
@@ -1929,6 +1941,9 @@ img, svg, canvas {
   .sm\:h-\[280px\] {
     height: 280px;
   }
+  .sm\:h-\[320px\] {
+    height: 320px;
+  }
   .sm\:w-44 {
     width: 11rem;
   }
@@ -1946,6 +1961,9 @@ img, svg, canvas {
   }
   .sm\:w-auto {
     width: auto;
+  }
+  .sm\:w-\[320px\] {
+    width: 320px;
   }
   .sm\:max-w-\[420px\] {
     max-width: 420px;
@@ -2080,8 +2098,14 @@ img, svg, canvas {
   .md\:h-\[340px\] {
     height: 340px;
   }
+  .md\:h-\[360px\] {
+    height: 360px;
+  }
   .md\:w-\[340px\] {
     width: 340px;
+  }
+  .md\:w-\[360px\] {
+    width: 360px;
   }
   .md\:max-w-\[400px\] {
     max-width: 400px;
@@ -2122,6 +2146,10 @@ img, svg, canvas {
   .md\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
+  }
+  .md\:text-7xl {
+    font-size: 4.5rem;
+    line-height: 1;
   }
 }
 @media (min-width: 1024px) {

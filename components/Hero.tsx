@@ -5,17 +5,17 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="mx-auto max-w-[1200px] px-6 pt-10 pb-12 md:pt-20 md:pb-32 flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-16">
+    <section className="mx-auto max-w-[1200px] px-6 pt-10 pb-12 md:pt-20 md:pb-32 flex flex-col md:flex-row items-center justify-between gap-10 lg:gap-16">
       
       {/* Columna de Texto */}
       <div className="flex-1 w-full text-center md:text-left flex flex-col items-center md:items-start">
         {/* Label superior ultra sutil */}
-        <p className="text-[0.65rem] tracking-[0.2em] text-muted/60 uppercase mb-4">
+        <p className="text-[0.65rem] tracking-[0.2em] text-muted/60 uppercase mb-3">
           Bitácora N.º 001 — Registro abierto
         </p>
 
-        {/* Título en tipografía prominente con escalado refinado */}
-        <h1 className="font-[family-name:var(--font-fraunces,serif)] text-ink text-4xl sm:text-5xl md:text-6xl leading-[1.05] mb-5 font-normal tracking-tight">
+        {/* Título con más presencia y escala en mobile */}
+        <h1 className="font-[family-name:var(--font-fraunces,serif)] text-ink text-5xl sm:text-6xl md:text-7xl leading-[1.02] mb-6 font-normal tracking-tight">
           <span>Bitácora</span>
           <span className="block italic text-olive/90 md:ml-[15%]">Curiosa</span>
         </h1>
@@ -25,17 +25,17 @@ export default function Hero() {
           Ideas y objetos para cerebros que registran demasiado.
         </p>
 
-        {/* Botones minimalistas y proporcionados */}
+        {/* Botones */}
         <div className="flex gap-3 justify-center md:justify-start w-full sm:w-auto">
           <Link
             href="/tienda"
-            className="px-4 py-2 text-[0.75rem] bg-olive hover:bg-olive-dark text-white rounded transition-colors tracking-wide"
+            className="px-5 py-2.5 text-[0.8rem] bg-olive hover:bg-olive-dark text-white rounded transition-colors tracking-wide font-medium"
           >
             Explorar la tienda
           </Link>
           <Link
             href="/sobre-bitacora-curiosa"
-            className="px-4 py-2 text-[0.75rem] bg-transparent text-ink/80 border border-beigeLine hover:bg-surface rounded transition-colors tracking-wide"
+            className="px-5 py-2.5 text-[0.8rem] bg-transparent text-ink/80 border border-beigeLine hover:bg-surface rounded transition-colors tracking-wide"
           >
             Abrir la Bitácora
           </Link>
@@ -43,9 +43,9 @@ export default function Hero() {
       </div>
 
       {/* Columna de Ilustración */}
-      <div className="flex-1 w-full flex justify-center md:justify-end mt-4 md:mt-0">
+      <div className="flex-1 w-full flex justify-center md:justify-end mt-2 md:mt-0">
         <div 
-          className="relative w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[340px] md:h-[340px]"
+          className="relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] md:w-[360px] md:h-[360px]"
           style={{
             WebkitMaskImage: "radial-gradient(circle, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 75%)",
             maskImage: "radial-gradient(circle, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 75%)"
