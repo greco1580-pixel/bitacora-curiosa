@@ -3,67 +3,119 @@ import WhatsAppLink from "@/components/WhatsAppLink";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-beigeLine bg-beige/60">
-      <div className="mx-auto max-w-content px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-5">
+    <footer className="border-t border-beigeLine/60 bg-paper/60">
+      {/* Banner compacto: Botón de arrepentimiento */}
+      <section className="border-b border-beigeLine/50 bg-paper/30 py-2.5">
+        <div className="mx-auto max-w-content px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center justify-between gap-2 text-center sm:flex-row sm:text-left">
+            <p className="font-sans text-[0.7rem] sm:text-xs text-body/70">
+              Pagás con Mercado Pago, elegís envío a domicilio o retiro sin cargo. ¿Te arrepentiste de una compra?
+            </p>
+            <Link
+              href="/arrepentimiento"
+              className="shrink-0 font-sans text-[0.62rem] font-medium uppercase tracking-[0.12em] text-body/60 hover:text-olive transition-colors"
+            >
+              Botón de arrepentimiento
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Enlaces principales del Footer */}
+      <div className="mx-auto max-w-content px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
+          {/* Marca / Intro */}
           <div className="col-span-2 sm:col-span-1">
-            <p className="font-serif text-xl text-negroSuave">Bitácora Curiosa</p>
-            <p className="mt-3 max-w-[22ch] font-sans text-sm text-grisCalido">
+            <p className="font-serif text-lg sm:text-xl font-normal text-ink/85">
+              Bitácora Curiosa
+            </p>
+            <p className="mt-2.5 max-w-[22ch] font-sans text-xs sm:text-sm leading-relaxed text-body/75">
               Objetos para cerebros que registran demasiado.
             </p>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <p className="entry-label uppercase text-grisCalido">Tienda</p>
-            <Link href="/tienda" className="underline-grow text-sm text-negroSuave">Ver todo</Link>
-            <Link href="/tienda?categoria=stickers" className="underline-grow text-sm text-negroSuave">Stickers</Link>
-            <Link href="/envios-cambios" className="underline-grow text-sm text-negroSuave">Envíos y cambios</Link>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <p className="entry-label uppercase text-grisCalido">Ayuda</p>
-            <Link href="/preguntas-frecuentes" className="underline-grow text-sm text-negroSuave">Preguntas frecuentes</Link>
-            <Link href="/contacto" className="underline-grow text-sm text-negroSuave">Contacto</Link>
-            <WhatsAppLink variant="link" texto="Escribinos" />
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <p className="entry-label uppercase text-grisCalido">Legal</p>
-            <Link href="/privacidad" className="underline-grow text-sm text-negroSuave">Privacidad</Link>
-            <Link href="/terminos" className="underline-grow text-sm text-negroSuave">Términos y condiciones</Link>
-            <Link href="/arrepentimiento" className="underline-grow text-sm font-medium text-tierraDark">
-              BOTÓN DE ARREPENTIMIENTO
+          {/* Columna Tienda */}
+          <div className="flex flex-col gap-2.5">
+            <p className="font-sans text-[0.65rem] font-normal uppercase tracking-[0.2em] text-muted/60">
+              Tienda
+            </p>
+            <Link href="/tienda" className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors">
+              Ver todo
+            </Link>
+            <Link href="/tienda?categoria=stickers" className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors">
+              Stickers
+            </Link>
+            <Link href="/envios-cambios" className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors">
+              Envíos y cambios
             </Link>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <p className="entry-label uppercase text-grisCalido">Comunidad</p>
+          {/* Columna Ayuda */}
+          <div className="flex flex-col gap-2.5">
+            <p className="font-sans text-[0.65rem] font-normal uppercase tracking-[0.2em] text-muted/60">
+              Ayuda
+            </p>
+            <Link href="/preguntas-frecuentes" className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors">
+              Preguntas frecuentes
+            </Link>
+            <Link href="/contacto" className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors">
+              Contacto
+            </Link>
+            <WhatsAppLink variant="link" texto="Escribinos" />
+          </div>
+
+          {/* Columna Legal */}
+          <div className="flex flex-col gap-2.5">
+            <p className="font-sans text-[0.65rem] font-normal uppercase tracking-[0.2em] text-muted/60">
+              Legal
+            </p>
+            <Link href="/privacidad" className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors">
+              Privacidad
+            </Link>
+            <Link href="/terminos" className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors">
+              Términos y condiciones
+            </Link>
+            <Link
+              href="/arrepentimiento"
+              className="mt-1 font-sans text-[0.65rem] font-medium uppercase tracking-[0.12em] text-body/70 hover:text-olive transition-colors"
+            >
+              Botón de arrepentimiento
+            </Link>
+          </div>
+
+          {/* Columna Comunidad */}
+          <div className="flex flex-col gap-2.5">
+            <p className="font-sans text-[0.65rem] font-normal uppercase tracking-[0.2em] text-muted/60">
+              Comunidad
+            </p>
             <a
               href="https://instagram.com/bitacoracuriosa"
               target="_blank"
               rel="noreferrer"
-              className="underline-grow text-sm text-negroSuave"
+              className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors"
             >
               Instagram
             </a>
             <a
-              href="https://tiktok.com/@lutdachosa"
+              href="https://tiktok.com/@bitacoracuriosa"
               target="_blank"
               rel="noreferrer"
-              className="underline-grow text-sm text-negroSuave"
+              className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors"
             >
               TikTok
             </a>
           </div>
         </div>
 
-        <hr className="stitch-divider my-10" />
+        <hr className="stitch-divider my-8 opacity-50" />
 
         <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-          <p className="font-sans text-xs text-grisCalido">
+          <p className="font-sans text-xs text-body/65">
             © {new Date().getFullYear()} Bitácora Curiosa. Todo lo que ves acá se sigue registrando.
           </p>
-          <p className="entry-label text-grisCalido">Hecho a mano, pensando en otras cuatro cosas.</p>
+          <p className="font-mono text-[0.65rem] text-muted/60 tracking-wider">
+            Hecho a mano, pensando en otras cuatro cosas.
+          </p>
         </div>
       </div>
     </footer>

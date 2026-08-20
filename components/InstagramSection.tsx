@@ -29,32 +29,37 @@ const instagramPosts = [
 
 export default function InstagramSection() {
   return (
-    <section className="py-12">
-      <div className="flex items-center justify-between">
-        <h2 className="font-serif text-2xl text-negroSuave">Seguir en Instagram</h2>
+    <section className="mx-auto max-w-content px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mb-5 flex items-baseline justify-between">
+        <h2 className="font-serif text-lg sm:text-xl font-normal text-ink/85">
+          Seguir en Instagram
+        </h2>
         <a
-          href="https://www.instagram.com/" // Cambiá por el link a tu perfil
+          href="https://www.instagram.com/bitacoracuriosa"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xs uppercase tracking-widest text-grisCalido hover:underline"
+          className="group inline-flex items-center gap-1.5 font-sans text-xs text-ink/70 hover:text-olive transition-colors"
         >
-          Ver perfil →
+          <span>Ver perfil</span>
+          <span className="text-xs transition-transform duration-200 group-hover:translate-x-1">→</span>
         </a>
       </div>
 
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {instagramPosts.map((post) => (
           <a
             key={post.id}
             href={post.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative aspect-square overflow-hidden rounded-lg bg-stone-200 block"
+            className="group relative aspect-square overflow-hidden rounded-lg bg-paper border border-beigeLine/40 block"
           >
-            <img
+            <Image
               src={post.imagen}
               alt={post.alt}
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 block"
+              fill
+              sizes="(max-width: 640px) 50vw, 25vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </a>
         ))}

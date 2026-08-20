@@ -68,7 +68,7 @@ export const productos: Producto[] = [
     format: "Tres tamaños",
     material: "Vinilo resistente al agua",
     precio: 10000,
-    categoria: "packs",
+    categoria: "stickers",
     imagenes: ["/images/productos/cerebro-ocupado.png"],
     stock: 15,
     destacado: true,
@@ -86,7 +86,7 @@ export const productos: Producto[] = [
     format: "Tres tamaños",
     material: "Vinilo resistente al agua",
     precio: 10000,
-    categoria: "indumentaria",
+    categoria: "stickers",
     imagenes: ["/images/productos/acercarse-bajo-su-propio-riesgo.png"],
     stock: 18,
     destacado: false, // Forzamos false para que solo 4 vayan a portada

@@ -5,47 +5,50 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="mx-auto max-w-[1200px] px-6 pt-16 pb-24 md:pt-20 md:pb-32 flex flex-wrap items-center justify-between gap-12 lg:gap-16">
+    <section className="mx-auto max-w-[1200px] px-6 pt-10 pb-12 md:pt-20 md:pb-32 flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-16">
       
       {/* Columna de Texto */}
-      <div className="flex-1 basis-[450px]">
-        <p className="text-[0.75rem] tracking-[0.15em] text-muted uppercase mb-5">
+      <div className="flex-1 w-full text-center md:text-left flex flex-col items-center md:items-start">
+        {/* Label superior ultra sutil */}
+        <p className="text-[0.65rem] tracking-[0.2em] text-muted/60 uppercase mb-4">
           Bitácora N.º 001 — Registro abierto
         </p>
 
-        <h1 className="font-[family-name:var(--font-fraunces,serif)] text-ink text-5xl sm:text-6xl leading-[1.1] mb-8 font-normal">
-          <span className="block">Bitácora</span>
-          <span className="block ml-[22%]">Curiosa</span>
+        {/* Título en tipografía prominente con escalado refinado */}
+        <h1 className="font-[family-name:var(--font-fraunces,serif)] text-ink text-4xl sm:text-5xl md:text-6xl leading-[1.05] mb-5 font-normal tracking-tight">
+          <span>Bitácora</span>
+          <span className="block italic text-olive/90 md:ml-[15%]">Curiosa</span>
         </h1>
 
-        <p className="text-[1.15rem] text-body italic mb-10 leading-[1.6]">
+        {/* Bajada sutil */}
+        <p className="text-xs sm:text-sm md:text-base text-body/75 italic mb-8 leading-[1.6] max-w-[340px] md:max-w-[400px]">
           Ideas y objetos para cerebros que registran demasiado.
         </p>
 
-        {/* Botones adaptados a la paleta de Tailwind */}
-        <div className="flex gap-4 flex-wrap">
+        {/* Botones minimalistas y proporcionados */}
+        <div className="flex gap-3 justify-center md:justify-start w-full sm:w-auto">
           <Link
             href="/tienda"
-            className="px-7 py-3.5 bg-olive hover:bg-olive-dark text-white rounded font-semibold text-[0.95rem] transition-colors"
+            className="px-4 py-2 text-[0.75rem] bg-olive hover:bg-olive-dark text-white rounded transition-colors tracking-wide"
           >
             Explorar la tienda
           </Link>
           <Link
             href="/sobre-bitacora-curiosa"
-            className="px-7 py-3.5 bg-transparent text-ink border border-[#d9cba3] hover:bg-surface rounded font-semibold text-[0.95rem] transition-colors"
+            className="px-4 py-2 text-[0.75rem] bg-transparent text-ink/80 border border-beigeLine hover:bg-surface rounded transition-colors tracking-wide"
           >
             Abrir la Bitácora
           </Link>
         </div>
       </div>
 
-      {/* Columna de Imagen (con difuminado suave) */}
-      <div className="flex-1 basis-[350px] flex justify-center lg:justify-end">
+      {/* Columna de Ilustración */}
+      <div className="flex-1 w-full flex justify-center md:justify-end mt-4 md:mt-0">
         <div 
-          className="relative w-[320px] h-[320px] sm:w-[360px] sm:h-[360px]"
+          className="relative w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[340px] md:h-[340px]"
           style={{
-            WebkitMaskImage: "radial-gradient(circle, rgba(0,0,0,1) 58%, rgba(0,0,0,0) 72%)",
-            maskImage: "radial-gradient(circle, rgba(0,0,0,1) 58%, rgba(0,0,0,0) 72%)"
+            WebkitMaskImage: "radial-gradient(circle, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 75%)",
+            maskImage: "radial-gradient(circle, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 75%)"
           }}
         >
           <Image

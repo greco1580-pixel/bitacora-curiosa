@@ -23,7 +23,7 @@ export default function Header() {
       <div className="mx-auto flex max-w-content items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="font-serif text-lg tracking-wideish text-negroSuave sm:text-xl"
+          className="font-serif italic text-base sm:text-lg tracking-normal text-olive/80 hover:text-olive transition-colors"
         >
           Bitácora Curiosa
         </Link>
@@ -33,7 +33,7 @@ export default function Header() {
             <Link
               key={e.href}
               href={e.href}
-              className="underline-grow font-sans text-sm text-negroSuave/85 hover:text-negroSuave"
+              className="underline-grow font-sans text-sm text-body/75 hover:text-olive transition-colors"
             >
               {e.label}
             </Link>
@@ -44,13 +44,13 @@ export default function Header() {
           <Link
             href="/tienda"
             aria-label="Buscar productos"
-            className="hidden text-negroSuave/80 hover:text-negroSuave sm:block"
+            className="hidden text-body/75 hover:text-olive transition-colors sm:block"
           >
             <IconoBuscar />
           </Link>
           <button
             aria-label="Mi cuenta (próximamente)"
-            className="hidden text-negroSuave/50 sm:block"
+            className="hidden text-body/50 transition-colors sm:block"
             title="Cuenta — próximamente"
           >
             <IconoCuenta />
@@ -58,7 +58,7 @@ export default function Header() {
           <button
             onClick={abrirCarrito}
             aria-label={`Abrir carrito, ${cantidadTotal} productos`}
-            className="relative text-negroSuave/80 hover:text-negroSuave"
+            className="relative text-body/75 hover:text-olive transition-colors"
           >
             <IconoCarrito />
             {cantidadTotal > 0 && (
@@ -68,7 +68,7 @@ export default function Header() {
             )}
           </button>
           <button
-            className="text-negroSuave md:hidden"
+            className="text-body/75 hover:text-olive transition-colors md:hidden"
             aria-label="Abrir menú"
             aria-expanded={menuAbierto}
             onClick={() => setMenuAbierto(true)}

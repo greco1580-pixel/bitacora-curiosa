@@ -28,7 +28,7 @@ export default function ProductCard({ producto, variant }: { producto: any; vari
     <div
       style={{
         backgroundColor: "#fbf9f5",
-        border: "1px solid #d9cba3",
+        border: "1px solid rgba(217, 203, 163, 0.6)",
         borderRadius: "8px",
         padding: "16px",
         display: "flex",
@@ -60,40 +60,46 @@ export default function ProductCard({ producto, variant }: { producto: any; vari
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
-            <span style={{ fontFamily: "var(--font-mono, monospace)", fontSize: "0.85rem", color: "#6e655a" }}>
+            <span style={{ fontFamily: "var(--font-mono, monospace)", fontSize: "0.85rem", color: "#8c8275" }}>
               {producto?.numero || `N.º ${producto?.id}`}
             </span>
           )}
         </div>
 
+        {/* Categoría: Tono más atenuado y tracking fino */}
         {producto?.categoria && (
-          <p style={{ color: "#8A9A7B", fontSize: "0.65rem", textTransform: "uppercase", fontWeight: 600, margin: 0 }}>
+          <p style={{ color: "rgba(138, 154, 123, 0.8)", fontSize: "0.65rem", textTransform: "uppercase", fontWeight: 500, letterSpacing: "0.08em", margin: 0 }}>
             {producto.categoria}
           </p>
         )}
-        <h3 style={{ fontFamily: "var(--font-fraunces, serif)", fontSize: "1.05rem", color: "#2a241c", margin: "4px 0 8px 0", fontWeight: 600 }}>
+
+        {/* Nombre del producto: Peso reducido de semibold (600) a medium (500) y color tinta suavizado */}
+        <h3 style={{ fontFamily: "var(--font-fraunces, serif)", fontSize: "1.05rem", color: "#423b32", margin: "4px 0 6px 0", fontWeight: 500, lineHeight: 1.3 }}>
           {producto?.nombre || producto?.name}
         </h3>
-        <p style={{ fontFamily: "var(--font-mono, monospace)", fontSize: "0.9rem", color: "#2a241c", fontWeight: 600, marginBottom: "12px" }}>
+
+        {/* Precio: Cambio de grosor (400) y tono gris cálido que no compite con la imagen */}
+        <p style={{ fontFamily: "var(--font-sans, sans-serif)", fontSize: "0.875rem", color: "#6b6257", fontWeight: 400, marginBottom: "14px" }}>
           {formatoARS(producto?.precio || 0)}
         </p>
       </Link>
 
+      {/* Botón: Tipografía y color suave */}
       <button
         type="button"
         onClick={handleAgregar}
         style={{
           width: "100%",
-          padding: "10px 0",
-          backgroundColor: agregado ? "#7A8B6E" : "#8A9A7B", // Verde oliva pastel (con variante activa)
+          padding: "9px 0",
+          backgroundColor: agregado ? "#7A8B6E" : "#8A9A7B",
           color: "#ffffff",
           border: "none",
           borderRadius: "4px",
           fontFamily: "var(--font-archivo, sans-serif)",
-          fontSize: "0.75rem",
-          letterSpacing: "0.12em",
+          fontSize: "0.7rem",
+          letterSpacing: "0.1em",
           textTransform: "uppercase",
-          fontWeight: 600,
+          fontWeight: 500,
           cursor: "pointer",
           transition: "background-color 0.2s ease, transform 0.1s ease"
         }}

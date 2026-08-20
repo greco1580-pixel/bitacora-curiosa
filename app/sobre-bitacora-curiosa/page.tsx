@@ -25,12 +25,14 @@ export default function SobrePage() {
       <div className="relative z-10 mx-auto max-w-content px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl">
           {/* BLOQUE 1: CÓMO EMPEZÓ EL PROYECTO */}
-          <p className="entry-label mb-3 font-sans font-medium uppercase tracking-wider text-sage-dark">
-            Entrada de bitácora
-          </p>
-          <h1 className="mb-8 font-serif text-4xl text-ink sm:text-5xl">
-            Sobre Bitácora Curiosa
-          </h1>
+          <div className="mb-8">
+            <p className="text-[0.65rem] font-sans font-normal uppercase tracking-[0.2em] text-muted/60 mb-2">
+              ENTRADA DE BITÁCORA
+            </p>
+            <h1 className="font-serif text-xl sm:text-2xl md:text-3xl text-ink/80 font-normal leading-snug">
+              Sobre Bitácora Curiosa
+            </h1>
+          </div>
 
           <div className="flex flex-col gap-5 font-sans leading-relaxed text-body">
             <p>

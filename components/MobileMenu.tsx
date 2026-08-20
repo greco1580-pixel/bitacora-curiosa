@@ -20,35 +20,85 @@ export default function MobileMenu({ abierto, onCerrar, enlaces }: Props) {
   if (!abierto) return null;
 
   return (
-    <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true">
-      <button
-        aria-label="Cerrar menú"
+    <div 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 99999,
+        display: 'flex',
+        justifyContent: 'flex-end'
+      }}
+      role="dialog" 
+      aria-modal="true"
+    >
+      {/* Fondo oscuro traslúcido atenuado */}
+      <div 
         onClick={onCerrar}
-        className="absolute inset-0 bg-negroSuave/30"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          backdropFilter: 'blur(2px)'
+        }}
       />
-      <div className="absolute right-0 top-0 flex h-full w-[82%] max-w-sm flex-col gap-1 bg-paper px-6 py-6 shadow-card">
-        <div className="mb-6 flex items-center justify-between">
-          <span className="font-serif text-lg text-negroSuave">Menú</span>
-          <button onClick={onCerrar} aria-label="Cerrar menú" className="p-1 text-negroSuave">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+
+      {/* Panel del menú lateral */}
+      <div 
+        style={{
+          position: 'relative',
+          zIndex: 10,
+          width: '82%',
+          maxWidth: '320px',
+          height: '100%',
+          backgroundColor: '#F7F4EE',
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '24px',
+          boxShadow: '-4px 0 15px rgba(0,0,0,0.05)',
+          borderLeft: '1px solid #ECE7DF'
+        }}
+      >
+        {/* Cabecera */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '16px', borderBottom: '1px solid #ECE7DF' }}>
+          <span className="font-sans text-[0.65rem] uppercase tracking-[0.2em]" style={{ color: '#999999', fontWeight: 400 }}>Menú</span>
+          <button 
+            onClick={onCerrar} 
+            aria-label="Cerrar menú" 
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" stroke="#888888" strokeWidth="1.2" strokeLinecap="round" />
             </svg>
           </button>
         </div>
-        <hr className="stitch-divider mb-4" />
-        <nav className="flex flex-col gap-5">
+
+        {/* Enlaces */}
+        <nav style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingTop: '28px' }}>
           {enlaces.map((e) => (
             <Link
               key={e.href}
               href={e.href}
               onClick={onCerrar}
-              className="font-serif text-2xl text-negroSuave"
+              className="font-serif text-lg"
+              style={{ textDecoration: 'none', color: '#555555', fontWeight: 400 }}
             >
               {e.label}
             </Link>
           ))}
         </nav>
-        <div className="mt-auto entry-label">Bitácora Curiosa — registro en curso</div>
+
+        {/* Pie */}
+        <div style={{ marginTop: 'auto', paddingTop: '20px', fontSize: '11px', color: '#AAAAAA', borderTop: '1px solid #ECE7DF', letterSpacing: '0.03em' }}>
+          Bitácora Curiosa — REGISTRO EN CURSO
+        </div>
       </div>
     </div>
   );

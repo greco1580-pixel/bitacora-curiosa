@@ -38,14 +38,14 @@ export default function FAQPage() {
   };
 
   return (
-    <main className="bg-paper min-h-screen py-16 px-6">
+    <main className="bg-paper min-h-screen py-12 px-6">
       <div className="max-w-[760px] mx-auto">
-        {/* Encabezado */}
-        <div className="mb-12">
-          <p className="text-[0.75rem] tracking-[0.15em] text-muted uppercase mb-3">
-            Consultas frecuentes
+        {/* Encabezado Armonizado */}
+        <div className="mb-8">
+          <p className="text-[0.65rem] font-sans font-normal uppercase tracking-[0.2em] text-muted/60 mb-2">
+            CONSULTAS FRECUENTES
           </p>
-          <h1 className="font-[family-name:var(--font-fraunces,serif)] text-ink text-4xl sm:text-5xl font-normal">
+          <h1 className="font-serif text-xl sm:text-2xl md:text-3xl text-ink/80 font-normal leading-snug">
             Preguntas frecuentes
           </h1>
         </div>
@@ -63,7 +63,7 @@ export default function FAQPage() {
                   onClick={() => toggleFAQ(index)}
                   className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
                 >
-                  <span className="font-[family-name:var(--font-fraunces,serif)] text-ink text-lg sm:text-xl font-normal pr-4">
+                  <span className="font-serif text-ink/80 text-lg sm:text-xl font-normal pr-4">
                     {faq.question}
                   </span>
                   <span
