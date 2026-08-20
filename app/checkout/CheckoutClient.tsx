@@ -28,7 +28,13 @@ interface RespuestaCheckoutError {
 }
 
 export default function CheckoutClient() {
-  const { items, subtotal, vaciarCarrito, cargado } = useCart();
+  const { items, vaciarCarrito, cargado } = useCart() as any;
+
+  const subtotal = (items || []).reduce((acc: number, item: any) => {
+    const prod = productos.find((p) => p.id === (item.productoId || item.id));
+    return acc + (prod ? prod.precio * item.cantidad : 0);
+  }, 0);
+
   const [metodoEntrega, setMetodoEntrega] = useState<MetodoEntrega>("ENVIO");
   const [provincia, setProvincia] = useState("");
   const [enviando, setEnviando] = useState(false);
@@ -50,8 +56,8 @@ export default function CheckoutClient() {
 
     const formData = new FormData(evento.currentTarget);
     const cuerpo = {
-      items: items.map((i) => ({
-        productoId: i.productoId,
+      items: (items || []).map((i: any) => ({
+        productoId: i.productoId || i.id,
         varianteId: i.varianteId,
         cantidad: i.cantidad
       })),
@@ -98,10 +104,6 @@ export default function CheckoutClient() {
       vaciarCarrito();
 
       if (ok.initPoint) {
-        // Pedido registrado y preferencia de pago creada: vamos a Mercado
-        // Pago. El estado real del pago lo confirma el webhook, no esta
-        // redirección — esta pantalla de "resultado" solo se muestra si
-        // no hay redirección posible (sin credenciales configuradas).
         window.location.href = ok.initPoint;
         return;
       }
@@ -137,7 +139,7 @@ export default function CheckoutClient() {
     );
   }
 
-  if (cargado && items.length === 0) {
+  if (cargado && items?.length === 0) {
     return (
       <div className="mx-auto max-w-content px-4 py-16 sm:px-6 lg:px-8">
         <p className="font-serif text-xl text-negroSuave">Tu carrito está vacío.</p>
@@ -267,12 +269,12 @@ export default function CheckoutClient() {
         <aside className="h-fit rounded border border-beigeLine bg-beige/40 p-6">
           <h2 className="font-serif text-xl text-negroSuave">Resumen</h2>
           <ul className="mt-4 flex flex-col gap-2">
-            {items.map((item) => {
-              const producto = productos.find((p) => p.id === item.productoId);
+            {(items || []).map((item: any) => {
+              const producto = productos.find((p) => p.id === (item.productoId || item.id));
               if (!producto) return null;
               return (
                 <li
-                  key={`${item.productoId}-${item.varianteId ?? ""}`}
+                  key={`${item.productoId || item.id}-${item.varianteId ?? ""}`}
                   className="flex justify-between font-sans text-sm text-grisCalido"
                 >
                   <span>
