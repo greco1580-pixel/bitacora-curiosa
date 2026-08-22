@@ -40,7 +40,7 @@ export default function ArrepentimientoClient() {
 
   if (codigo) {
     return (
-      <div className="mx-auto max-w-content px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-content px-4 pt-28 pb-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-xl">
           <p className="entry-label mb-2 uppercase text-grisCalido">Solicitud registrada</p>
           <h1 className="mb-4 font-serif text-3xl text-negroSuave">
@@ -60,7 +60,7 @@ export default function ArrepentimientoClient() {
   }
 
   return (
-    <div className="mx-auto max-w-content px-4 py-12 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-content px-4 pt-28 pb-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-xl">
         <p className="entry-label mb-3 uppercase text-grisCalido">Derecho del consumidor</p>
         <h1 className="mb-4 font-serif text-4xl text-negroSuave sm:text-5xl">
