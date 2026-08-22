@@ -1,6 +1,6 @@
 {
-  "/checkout/page": "app/checkout/page.js",
   "/tienda/page": "app/tienda/page.js",
   "/producto/[slug]/page": "app/producto/[slug]/page.js",
-  "/carrito/page": "app/carrito/page.js"
+  "/carrito/page": "app/carrito/page.js",
+  "/checkout/page": "app/checkout/page.js"
 }
