@@ -91,7 +91,7 @@ export default function SobreBitacoraCuriosaPage() {
                   className="object-contain p-2 mix-blend-multiply opacity-75"
                 />
               </div>
-              <p className="mt-2 text-[0.55rem] tracking-[0.15em] uppercase text-muted/50 text-right font-mono">
+              <p className="mt-2 text-[0.55rem] tracking-[0.15em] uppercase text-muted/50 text-center font-mono">
                 Mapa interno · Registro en proceso
               </p>
             </div>
