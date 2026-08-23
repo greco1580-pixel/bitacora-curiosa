@@ -131,6 +131,17 @@ export default function CheckoutClient() {
     }
   }
 
+  function ejecutarSubmit() {
+    const elForm = document.getElementById("checkout-form") as HTMLFormElement;
+    if (elForm) {
+      if (!elForm.checkValidity()) {
+        elForm.reportValidity();
+      } else {
+        elForm.requestSubmit();
+      }
+    }
+  }
+
   if (resultado) {
     return (
       <div className="mx-auto max-w-content px-4 py-16 sm:px-6 lg:px-8">
@@ -274,8 +285,9 @@ export default function CheckoutClient() {
 
           <div className="lg:hidden">
             <button
-              type="submit"
+              type="button"
               disabled={enviando}
+              onClick={ejecutarSubmit}
               className="w-full rounded-2xl bg-[#93a085] py-3.5 font-sans text-xs font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90 disabled:opacity-60"
             >
               {enviando ? "PROCESANDO..." : "PAGAR AHORA"}
@@ -325,9 +337,9 @@ export default function CheckoutClient() {
 
           <div className="mt-5 hidden lg:block">
             <button
-              type="submit"
-              form="checkout-form"
+              type="button"
               disabled={enviando}
+              onClick={ejecutarSubmit}
               className="w-full rounded-2xl bg-[#93a085] py-3.5 font-sans text-xs font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90 disabled:opacity-60"
             >
               {enviando ? "PROCESANDO..." : "PAGAR AHORA"}
