@@ -30,7 +30,7 @@ export default function CheckoutClient() {
   const { items, vaciarCarrito, cargado } = useCart() as any;
 
   const subtotal = (items || []).reduce((acc: number, item: any) => {
-    const precio = item.producto?.precio || 0;
+    const precio = item.producto?.precio || item.precio || 0;
     return acc + precio * item.cantidad;
   }, 0);
 
@@ -54,20 +54,18 @@ export default function CheckoutClient() {
     setEnviando(true);
 
     const formData = new FormData(evento.currentTarget);
-
-    // Limpieza de teléfono (solo números)
     const telefonoLimpio = String(formData.get("telefono") || "").replace(/\D/g, "");
 
     const cuerpo = {
       items: (items || []).map((i: any) => {
-        const itemProcesado: any = {
-          productoId: i.producto?.id || i.productoId || i.id,
-          cantidad: Number(i.cantidad)
+        const prod = i.producto || i;
+        return {
+          productoId: prod.id || i.productoId || i.id,
+          titulo: prod.nombre || prod.name || "Producto Nolá",
+          precio: Number(prod.precio || prod.price || 0),
+          cantidad: Number(i.cantidad || 1),
+          ...(i.varianteId ? { varianteId: i.varianteId } : {})
         };
-        if (i.varianteId) {
-          itemProcesado.varianteId = i.varianteId;
-        }
-        return itemProcesado;
       }),
       metodoEntrega,
       datosComprador: {
@@ -97,7 +95,15 @@ export default function CheckoutClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(cuerpo)
       });
-      const datos = (await respuesta.json()) as RespuestaCheckoutOk | RespuestaCheckoutError;
+
+      const texto = await respuesta.text();
+      let datos: any = {};
+      try {
+        datos = JSON.parse(texto);
+      } catch {
+        setError(`Error del servidor (${respuesta.status}): ${texto.slice(0, 150)}`);
+        return;
+      }
 
       if (!respuesta.ok) {
         const err = datos as RespuestaCheckoutError;
@@ -105,7 +111,7 @@ export default function CheckoutClient() {
           setCoordinacionManual(true);
         }
         const detalleTexto = err.detalles ? ` (${JSON.stringify(err.detalles)})` : "";
-        setError((err.error || "No se pudo procesar el pedido.") + detalleTexto);
+        setError((err.error || `Error ${respuesta.status}`) + detalleTexto);
         return;
       }
 
@@ -118,8 +124,8 @@ export default function CheckoutClient() {
       }
 
       setResultado(ok);
-    } catch {
-      setError("Hubo un problema de conexión. Probá de nuevo en un momento.");
+    } catch (e: any) {
+      setError(`Error de red: ${e?.message || "No se pudo establecer conexión."}`);
     } finally {
       setEnviando(false);
     }
@@ -282,7 +288,7 @@ export default function CheckoutClient() {
           
           <ul className="flex flex-col gap-2.5 pb-5 border-b border-[#e2ded6]">
             {(items || []).map((item: any, idx: number) => {
-              const producto = item.producto;
+              const producto = item.producto || item;
               if (!producto) return null;
               return (
                 <li
@@ -290,10 +296,10 @@ export default function CheckoutClient() {
                   className="flex justify-between items-center font-sans text-xs"
                 >
                   <span className="text-[#8c827a]">
-                    {producto.nombre || producto.name} <span className="text-[11px] text-[#8c827a]/70">× {item.cantidad}</span>
+                    {producto.nombre || producto.title} <span className="text-[11px] text-[#8c827a]/70">× {item.cantidad}</span>
                   </span>
                   <span className="font-serif text-[#2d2a26]">
-                    {formatoARS(producto.precio * item.cantidad)}
+                    {formatoARS((producto.precio || producto.price || 0) * item.cantidad)}
                   </span>
                 </li>
               );
