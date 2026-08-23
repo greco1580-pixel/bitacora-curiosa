@@ -1,15 +1,38 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import WhatsAppLink from "@/components/WhatsAppLink";
 
 export default function ContactoPage() {
   const [enviado, setEnviado] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function manejarEnvio(e: FormEvent) {
+  async function manejarEnvio(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // TODO: conectar a un endpoint real (formspree, resend, backend propio, etc.)
-    setEnviado(true);
+    setEnviando(true);
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const respuesta = await fetch("https://formspree.io/f/mvkpynar", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (respuesta.ok) {
+        setEnviado(true);
+      } else {
+        setError("Hubo un problema al enviar tu mensaje. Por favor, intentalo de nuevo.");
+      }
+    } catch {
+      setError("Error de conexión. Revisá tu red e intentalo nuevamente.");
+    } finally {
+      setEnviando(false);
+    }
   }
 
   return (
@@ -17,21 +40,17 @@ export default function ContactoPage() {
       <div className="mx-auto max-w-xl">
         <p className="entry-label mb-3 uppercase text-grisCalido">Contacto</p>
         <h1 className="mb-4 font-serif text-4xl text-negroSuave sm:text-5xl">Escribinos</h1>
-        <p className="mb-8 font-sans text-sm leading-relaxed text-grisCalido">
+        <p className="mb-10 font-sans text-sm leading-relaxed text-grisCalido">
           Para consultas sobre pedidos, productos o cualquier otra cosa que se te haya
           ocurrido mientras mirabas la tienda.
         </p>
 
-        <div className="mb-10">
-          <WhatsAppLink variant="button" texto="Escribir por WhatsApp" />
-        </div>
-
-        <hr className="stitch-divider mb-10" />
-
         {enviado ? (
-          <p className="entry-label text-verde">
-            Mensaje enviado. Te respondemos en cuanto podamos.
-          </p>
+          <div className="rounded border border-tierra/40 bg-tierra/5 p-6">
+            <p className="font-sans text-sm text-tierraDark">
+              Mensaje enviado correctamente. Te respondemos en cuanto podamos.
+            </p>
+          </div>
         ) : (
           <form onSubmit={manejarEnvio} className="flex flex-col gap-5">
             <div className="flex flex-col gap-1.5">
@@ -69,11 +88,19 @@ export default function ContactoPage() {
                 className="resize-none rounded border border-beigeLine bg-paper px-4 py-3 font-sans text-sm outline-none focus-visible:border-tierra"
               />
             </div>
+
+            {error && (
+              <p className="font-sans text-xs text-red-600">
+                {error}
+              </p>
+            )}
+
             <button
               type="submit"
-              className="self-start rounded bg-negroSuave px-7 py-3.5 font-sans text-sm text-paper hover:bg-tierraDark"
+              disabled={enviando}
+              className="mt-2 self-start rounded bg-negroSuave px-7 py-3.5 font-sans text-sm text-paper hover:bg-tierraDark disabled:opacity-60 transition-colors"
             >
-              Enviar mensaje
+              {enviando ? "Enviando..." : "Enviar mensaje"}
             </button>
           </form>
         )}

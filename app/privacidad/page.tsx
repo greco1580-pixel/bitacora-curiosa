@@ -14,13 +14,6 @@ export default function PrivacidadPage() {
         <h1 className="mb-8 font-serif text-4xl text-negroSuave sm:text-5xl">Privacidad</h1>
 
         <div className="flex flex-col gap-6 font-sans leading-relaxed text-grisCalido">
-          <p className="rounded border border-tierra/30 bg-tierra/5 p-4 text-sm text-tierraDark">
-            Este texto es un borrador de referencia, no una política de privacidad revisada
-            legalmente. Hay que revisarlo con alguien idóneo antes de publicar el sitio,
-            adaptándolo a la Ley 25.326 de Protección de Datos Personales y a cómo se procesan
-            realmente los datos (proveedor de base de datos, Mercado Pago, email, etc.).
-          </p>
-
           <section>
             <h2 className="font-serif text-xl text-negroSuave">Qué datos recolectamos</h2>
             <p className="mt-2">

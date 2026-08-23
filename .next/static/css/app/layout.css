@@ -1572,6 +1572,10 @@ html, body {
   --tw-text-opacity: 1;
   color: rgb(185 28 28 / var(--tw-text-opacity, 1));
 }
+.text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity, 1));
+}
 .underline {
   text-decoration-line: underline;
 }
@@ -1593,6 +1597,9 @@ html, body {
 }
 .opacity-50 {
   opacity: 0.5;
+}
+.opacity-80 {
+  opacity: 0.8;
 }
 .mix-blend-multiply {
   mix-blend-mode: multiply;

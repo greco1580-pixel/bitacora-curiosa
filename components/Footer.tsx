@@ -1,5 +1,4 @@
 import Link from "next/link";
-import WhatsAppLink from "@/components/WhatsAppLink";
 
 export default function Footer() {
   return (
@@ -61,7 +60,6 @@ export default function Footer() {
             <Link href="/contacto" className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors">
               Contacto
             </Link>
-            <WhatsAppLink variant="link" texto="Escribinos" />
           </div>
 
           {/* Columna Legal */}

@@ -16,20 +16,12 @@ export default function TerminosPage() {
         </h1>
 
         <div className="flex flex-col gap-6 font-sans leading-relaxed text-grisCalido">
-          <p className="rounded border border-tierra/30 bg-tierra/5 p-4 text-sm text-tierraDark">
-            Este texto es un borrador de referencia, no términos y condiciones revisados
-            legalmente. Hay que revisarlo con alguien idóneo antes de publicar el sitio,
-            confirmando que cumple con la Ley de Defensa del Consumidor (24.240) y la normativa
-            de comercio electrónico vigente en Argentina.
-          </p>
-
           <section>
             <h2 className="font-serif text-xl text-negroSuave">Quién vende</h2>
             <p className="mt-2">
               {DATOS_COMERCIALES.razonSocial} — CUIT {DATOS_COMERCIALES.cuit} —{" "}
               {DATOS_COMERCIALES.domicilioComercial}. Contacto:{" "}
-              {DATOS_COMERCIALES.emailAtencion}, {DATOS_COMERCIALES.canalConsultas},{" "}
-              {DATOS_COMERCIALES.horarioAtencion}.
+              {DATOS_COMERCIALES.emailAtencion}, {DATOS_COMERCIALES.horarioAtencion}.
             </p>
           </section>
 

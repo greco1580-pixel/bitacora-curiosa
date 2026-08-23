@@ -109,7 +109,7 @@ export default function ArrepentimientoClient() {
 
         <hr className="stitch-divider my-12" />
 
-        <p className="font-sans text-xs leading-relaxed text-grisCalido">
+        <p className="font-sans text-[0.7rem] leading-relaxed text-body/70 opacity-80">
           {DATOS_COMERCIALES.razonSocial} — {DATOS_COMERCIALES.domicilioComercial} — CUIT{" "}
           {DATOS_COMERCIALES.cuit}. Consultas: {DATOS_COMERCIALES.emailAtencion},{" "}
           {DATOS_COMERCIALES.horarioAtencion}.

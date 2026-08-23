@@ -20,12 +20,10 @@ export default function EnviosCambiosPage() {
           <section>
             <h2 className="font-serif text-xl text-negroSuave">Envío a domicilio</h2>
             <p className="mt-2">
-              Calculamos el costo según tu provincia al finalizar la compra. Si todavía no
-              tenemos una tarifa cargada para tu zona, te contactamos por email para
-              coordinarlo antes de confirmar el pago — nunca asumimos que el envío es gratis
-              por defecto.
+              Calculamos el costo según tu provincia al finalizar la compra. Los despachos se
+              realizan dentro de los 2 a 4 días hábiles posteriores a la confirmación del pago.
+              Te enviaremos el código de seguimiento por email apenas el paquete esté en camino.
             </p>
-            <p className="mt-2">[COMPLETAR: tiempos de entrega reales una vez despachado.]</p>
           </section>
 
           <section>
@@ -39,7 +37,11 @@ export default function EnviosCambiosPage() {
 
           <section>
             <h2 className="font-serif text-xl text-negroSuave">Cambios y devoluciones</h2>
-            <p className="mt-2">[COMPLETAR: plazo y condiciones reales de cambios.]</p>
+            <p className="mt-2">
+              Si querés realizar un cambio por falla o preferencia, tenés hasta 10 días de corrido
+              desde que recibís el producto. El ítem debe estar sin uso y en su empaque original.
+              Escribinos a nuestro email de contacto para coordinarlo.
+            </p>
             <p className="mt-2">
               Si querés ejercer tu derecho de arrepentimiento, podés hacerlo sin necesidad de
               registrarte desde el{" "}
