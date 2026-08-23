@@ -31,25 +31,25 @@
       "static/chunks/main-app.js",
       "static/chunks/app/tienda/loading.js"
     ],
-    "/producto/[slug]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/producto/[slug]/page.js"
-    ],
-    "/carrito/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/carrito/page.js"
-    ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/_not-found/page.js"
     ],
-    "/checkout/page": [
+    "/producto/[slug]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/checkout/page.js"
+      "static/chunks/app/producto/[slug]/page.js"
+    ],
+    "/preguntas-frecuentes/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/preguntas-frecuentes/page.js"
+    ],
+    "/sobre-bitacora-curiosa/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/sobre-bitacora-curiosa/page.js"
     ]
   }
 }

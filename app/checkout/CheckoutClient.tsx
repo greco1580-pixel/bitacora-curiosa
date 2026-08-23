@@ -166,7 +166,7 @@ export default function CheckoutClient() {
       </div>
 
       <div className="grid gap-12 lg:grid-cols-[1fr_360px]">
-        <form id="checkout-form" onSubmit={manejarEnvio} className="flex flex-col gap-8" noValidate>
+        <form id="checkout-form" onSubmit={manejarEnvio} className="flex flex-col gap-8">
           <section className="flex flex-col gap-4">
             <h2 className="font-serif text-xl font-normal text-[#6b635b]">Tus datos</h2>
             <div className="grid gap-4 sm:grid-cols-2">
