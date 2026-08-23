@@ -23,27 +23,35 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-
-  // Carga inicial desde localStorage si existe
-  useEffect(() => {
+  // Inicialización perezosa: lee localStorage en el primer render exacto
+  const [items, setItems] = useState<CartItem[]>(() => {
+    if (typeof window === "undefined") return [];
     try {
       const guardado = localStorage.getItem("bitacora_carrito");
-      if (guardado) setItems(JSON.parse(guardado));
+      return guardado ? JSON.parse(guardado) : [];
     } catch (e) {
       console.error("Error cargando carrito:", e);
+      return [];
     }
+  });
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [cargado, setCargado] = useState(false);
+
+  // Marca que el componente ya montó en el cliente
+  useEffect(() => {
+    setCargado(true);
   }, []);
 
-  // Persistencia en localStorage
+  // Persiste en localStorage SOLO después del montaje inicial
   useEffect(() => {
+    if (!cargado) return;
     try {
       localStorage.setItem("bitacora_carrito", JSON.stringify(items));
     } catch (e) {
       console.error("Error guardando carrito:", e);
     }
-  }, [items]);
+  }, [items, cargado]);
 
   const abrirCarrito = () => setIsOpen(true);
   const cerrarCarrito = () => setIsOpen(false);
@@ -65,7 +73,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return [...prevItems, { producto, varianteId, cantidad }];
     });
 
-    // Abre el drawer automáticamente para dar feedback visual inmediato
     setIsOpen(true);
   };
 
@@ -109,7 +116,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 export function useCart() {
   const context = useContext(CartContext);
   if (!context) {
-    // Retorna funciones de respaldo por si se invoca antes de la hidratación de React
     return {
       items: [],
       isOpen: false,

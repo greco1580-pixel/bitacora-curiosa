@@ -1,11 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
 import { formatoARS } from "@/lib/format";
-
-const ENVIO_ESTIMADO = 3500;
 
 export default function CartDrawer() {
   const router = useRouter();
@@ -18,9 +15,6 @@ export default function CartDrawer() {
     return acc + precio * item.cantidad;
   }, 0);
 
-  const envio = items.length > 0 ? ENVIO_ESTIMADO : 0;
-  const total = subtotal + envio;
-
   return (
     <div
       className="fixed inset-0 z-[9999] flex justify-end bg-black/30 backdrop-blur-[2px] transition-opacity"
@@ -31,7 +25,6 @@ export default function CartDrawer() {
         onClick={(e) => e.stopPropagation()}
       >
         <div>
-          {/* Encabezado */}
           <div className="flex justify-between items-center mb-6 pb-2 border-b border-line/30">
             <h2 className="font-serif text-xl text-ink/85 font-normal">Tu Carrito</h2>
             <button
@@ -42,7 +35,6 @@ export default function CartDrawer() {
             </button>
           </div>
 
-          {/* Items */}
           {items.length === 0 ? (
             <p className="font-sans text-xs text-muted/80 font-light py-8 text-center">
               El carrito está vacío.
@@ -95,7 +87,6 @@ export default function CartDrawer() {
           )}
         </div>
 
-        {/* Resumen final e Iniciar compra */}
         {items.length > 0 && (
           <div className="border-t border-line/40 pt-4 mt-6 space-y-3">
             <div className="flex justify-between items-center font-sans text-xs text-muted/80 font-light">
@@ -103,8 +94,8 @@ export default function CartDrawer() {
               <span className="font-medium text-ink/80">{formatoARS(subtotal)}</span>
             </div>
             <div className="flex justify-between items-center font-sans text-xs text-muted/80 font-light">
-              <span>Envío estimado</span>
-              <span className="font-medium text-ink/80">{formatoARS(envio)}</span>
+              <span>Envío</span>
+              <span className="font-medium text-ink/80">A calcular en checkout</span>
             </div>
 
             <div className="flex justify-between items-center pt-2 border-t border-line/20">
@@ -112,7 +103,7 @@ export default function CartDrawer() {
                 Total
               </span>
               <span className="font-serif text-base text-ink/90 font-medium">
-                {formatoARS(total)}
+                {formatoARS(subtotal)}
               </span>
             </div>
 

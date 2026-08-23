@@ -4,19 +4,13 @@ import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { formatoARS } from "@/lib/format";
 
-const ENVIO_ESTIMADO = 3500;
-
 export default function CarritoPage() {
   const { items = [], eliminarDelCarrito, actualizarCantidad, limpiarCarrito } = useCart();
 
-  // Cálculo del subtotal
   const subtotal = items.reduce((acc, item) => {
     const precio = item.producto?.precio || 0;
     return acc + precio * item.cantidad;
   }, 0);
-
-  const envio = items.length > 0 ? ENVIO_ESTIMADO : 0;
-  const total = subtotal + envio;
 
   return (
     <div className="mx-auto max-w-content px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -38,8 +32,6 @@ export default function CarritoPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Listado de Productos */}
           <div className="lg:col-span-7 space-y-4">
             {items.map((item, index) => (
               <div
@@ -96,7 +88,6 @@ export default function CarritoPage() {
             </button>
           </div>
 
-          {/* Resumen de Compra - Colores suaves y legibles */}
           <div className="lg:col-span-5 bg-surface/50 border border-line/40 p-6 rounded-2xl shadow-sm space-y-4">
             <h2 className="font-serif text-lg text-ink/85 font-normal pb-2 border-b border-line/30">
               Resumen
@@ -109,7 +100,7 @@ export default function CarritoPage() {
               </div>
               <div className="flex justify-between items-center">
                 <span className="font-light">Envío</span>
-                <span className="font-medium text-ink/80">{formatoARS(envio)}</span>
+                <span className="font-medium text-ink/80">A calcular en checkout</span>
               </div>
             </div>
 
@@ -118,7 +109,7 @@ export default function CarritoPage() {
                 Total
               </span>
               <span className="font-serif text-lg text-ink/90 font-medium">
-                {formatoARS(total)}
+                {formatoARS(subtotal)}
               </span>
             </div>
 
@@ -129,7 +120,6 @@ export default function CarritoPage() {
               Finalizar Compra
             </Link>
           </div>
-
         </div>
       )}
     </div>

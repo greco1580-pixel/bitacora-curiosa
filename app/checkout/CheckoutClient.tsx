@@ -3,7 +3,6 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
-import { productos } from "@/data/products";
 import { formatoARS } from "@/lib/format";
 import { PROVINCIAS_ARGENTINA, calcularCostoEnvio } from "@/lib/shipping";
 import { RETIRO_PUNTO } from "@/lib/commerce-config";
@@ -31,8 +30,8 @@ export default function CheckoutClient() {
   const { items, vaciarCarrito, cargado } = useCart() as any;
 
   const subtotal = (items || []).reduce((acc: number, item: any) => {
-    const prod = productos.find((p) => p.id === (item.productoId || item.id));
-    return acc + (prod ? prod.precio * item.cantidad : 0);
+    const precio = item.producto?.precio || 0;
+    return acc + precio * item.cantidad;
   }, 0);
 
   const [metodoEntrega, setMetodoEntrega] = useState<MetodoEntrega>("ENVIO");
@@ -55,30 +54,39 @@ export default function CheckoutClient() {
     setEnviando(true);
 
     const formData = new FormData(evento.currentTarget);
+
+    // Limpieza de teléfono (solo números)
+    const telefonoLimpio = String(formData.get("telefono") || "").replace(/\D/g, "");
+
     const cuerpo = {
-      items: (items || []).map((i: any) => ({
-        productoId: i.productoId || i.id,
-        varianteId: i.varianteId,
-        cantidad: i.cantidad
-      })),
+      items: (items || []).map((i: any) => {
+        const itemProcesado: any = {
+          productoId: i.producto?.id || i.productoId || i.id,
+          cantidad: Number(i.cantidad)
+        };
+        if (i.varianteId) {
+          itemProcesado.varianteId = i.varianteId;
+        }
+        return itemProcesado;
+      }),
       metodoEntrega,
       datosComprador: {
-        nombre: String(formData.get("nombre") || ""),
-        apellido: String(formData.get("apellido") || ""),
-        email: String(formData.get("email") || ""),
-        telefono: String(formData.get("telefono") || ""),
-        dni: String(formData.get("dni") || "") || undefined
+        nombre: String(formData.get("nombre") || "").trim(),
+        apellido: String(formData.get("apellido") || "").trim(),
+        email: String(formData.get("email") || "").trim(),
+        telefono: telefonoLimpio,
+        ...(formData.get("dni") ? { dni: String(formData.get("dni")).trim() } : {})
       },
       datosEnvio:
         metodoEntrega === "ENVIO"
           ? {
               provincia,
-              localidad: String(formData.get("localidad") || ""),
-              codigoPostal: String(formData.get("codigoPostal") || ""),
-              direccion: String(formData.get("direccion") || ""),
-              numero: String(formData.get("numero") || ""),
-              pisoDepto: String(formData.get("pisoDepto") || "") || undefined,
-              indicaciones: String(formData.get("indicaciones") || "") || undefined
+              localidad: String(formData.get("localidad") || "").trim(),
+              codigoPostal: String(formData.get("codigoPostal") || "").trim(),
+              direccion: String(formData.get("direccion") || "").trim(),
+              numero: String(formData.get("numero") || "").trim(),
+              ...(formData.get("pisoDepto") ? { pisoDepto: String(formData.get("pisoDepto")).trim() } : {}),
+              ...(formData.get("indicaciones") ? { indicaciones: String(formData.get("indicaciones")).trim() } : {})
             }
           : undefined
     };
@@ -96,7 +104,8 @@ export default function CheckoutClient() {
         if (err.requiereCoordinacionManual) {
           setCoordinacionManual(true);
         }
-        setError(err.error || "No se pudo procesar el pedido.");
+        const detalleTexto = err.detalles ? ` (${JSON.stringify(err.detalles)})` : "";
+        setError((err.error || "No se pudo procesar el pedido.") + detalleTexto);
         return;
       }
 
@@ -152,34 +161,27 @@ export default function CheckoutClient() {
 
   return (
     <div className="mx-auto max-w-content px-4 py-8 sm:px-6 lg:px-8">
-      {/* Título idéntico en escala al "Carrito de Compras" */}
       <div className="mb-8">
         <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#6b635b]">Checkout</h1>
       </div>
 
       <div className="grid gap-12 lg:grid-cols-[1fr_360px]">
         <form id="checkout-form" onSubmit={manejarEnvio} className="flex flex-col gap-8" noValidate>
-          {/* Seccion: Tus Datos */}
           <section className="flex flex-col gap-4">
             <h2 className="font-serif text-xl font-normal text-[#6b635b]">Tus datos</h2>
-            
             <div className="grid gap-4 sm:grid-cols-2">
               <Campo id="nombre" label="Nombre" required />
               <Campo id="apellido" label="Apellido" required />
             </div>
-
             <div className="grid gap-4 sm:grid-cols-2">
               <Campo id="email" label="Email" type="email" required />
               <Campo id="telefono" label="Teléfono" type="tel" required />
             </div>
-
             <Campo id="dni" label="DNI (opcional)" />
           </section>
 
-          {/* Seccion: Entrega */}
           <section className="flex flex-col gap-4 pt-4 border-t border-[#e2ded6]/60">
             <h2 className="font-serif text-xl font-normal text-[#6b635b]">Entrega</h2>
-            
             <div className="flex gap-6 font-sans text-xs text-[#8c827a]" role="radiogroup" aria-label="Método de entrega">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -275,21 +277,20 @@ export default function CheckoutClient() {
           </div>
         </form>
 
-        {/* Tarjeta Resumen: Mismos colores y tamaño exacto del Carrito */}
         <aside className="h-fit rounded-2xl border border-[#e5e0d8] bg-[#f2eee9]/80 p-6 sm:p-7">
           <h2 className="font-serif text-xl font-normal text-[#6b635b] mb-5">Resumen</h2>
           
           <ul className="flex flex-col gap-2.5 pb-5 border-b border-[#e2ded6]">
-            {(items || []).map((item: any) => {
-              const producto = productos.find((p) => p.id === (item.productoId || item.id));
+            {(items || []).map((item: any, idx: number) => {
+              const producto = item.producto;
               if (!producto) return null;
               return (
                 <li
-                  key={`${item.productoId || item.id}-${item.varianteId ?? ""}`}
+                  key={`${producto.id || idx}-${item.varianteId ?? ""}`}
                   className="flex justify-between items-center font-sans text-xs"
                 >
                   <span className="text-[#8c827a]">
-                    {producto.nombre} <span className="text-[11px] text-[#8c827a]/70">× {item.cantidad}</span>
+                    {producto.nombre || producto.name} <span className="text-[11px] text-[#8c827a]/70">× {item.cantidad}</span>
                   </span>
                   <span className="font-serif text-[#2d2a26]">
                     {formatoARS(producto.precio * item.cantidad)}
@@ -307,7 +308,7 @@ export default function CheckoutClient() {
           <div className="mt-2.5 flex justify-between font-sans text-xs text-[#8c827a] pb-5 border-b border-[#e2ded6]">
             <span>Envío</span>
             <span className="font-serif text-[#2d2a26]">
-              {costoEnvioEstimado === null ? "A coordinar" : formatoARS(costoEnvioEstimado)}
+              {costoEnvioEstimado === null ? "A calcular" : formatoARS(costoEnvioEstimado)}
             </span>
           </div>
 

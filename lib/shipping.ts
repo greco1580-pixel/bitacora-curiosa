@@ -13,10 +13,28 @@
 export const TARIFAS_ENVIO_DEMO_ARS: Record<string, number> = {
   "Ciudad Autónoma de Buenos Aires": 2500,
   "Buenos Aires": 3500,
+  Catamarca: 5500,
+  Chaco: 5500,
+  Chubut: 6200,
   Córdoba: 4800,
+  Corrientes: 5500,
+  "Entre Ríos": 4800,
+  Formosa: 5500,
+  Jujuy: 5500,
+  "La Pampa": 4800,
+  "La Rioja": 5500,
+  Mendoza: 5500,
+  Misiones: 5500,
+  Neuquén: 6200,
+  "Río Negro": 6200,
+  Salta: 5500,
+  "San Juan": 5500,
+  "San Luis": 5500,
+  "Santa Cruz": 6200,
   "Santa Fe": 4800,
-  Mendoza: 5500
-  // Agregar el resto de las provincias con su tarifa real antes de publicar.
+  "Santiago del Estero": 5500,
+  "Tierra del Fuego": 6200,
+  Tucumán: 5500
 };
 
 export const PROVINCIAS_ARGENTINA = [
