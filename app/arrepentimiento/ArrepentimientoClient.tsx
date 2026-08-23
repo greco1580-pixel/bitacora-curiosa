@@ -1,147 +1,130 @@
 "use client";
 
-import { useState } from "react";
-import { DATOS_COMERCIALES } from "@/lib/commerce-config";
+import { useState, FormEvent } from "react";
 
-export default function ArrepentimientoClient() {
+export default function ArrepentimientoPage() {
+  const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [codigo, setCodigo] = useState<string | null>(null);
 
-  async function manejarEnvio(evento: React.FormEvent<HTMLFormElement>) {
-    evento.preventDefault();
-    setError(null);
+  async function manejarEnvio(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setEnviando(true);
+    setError(null);
 
-    const formData = new FormData(evento.currentTarget);
+    const formData = new FormData(e.currentTarget);
+    formData.append("_subject", "Solicitud de Arrepentimiento / Devolución");
+
     try {
-      const respuesta = await fetch("/api/arrepentimiento", {
+      const respuesta = await fetch("https://formspree.io/f/mvkpynar", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nombreCompleto: String(formData.get("nombreCompleto") || ""),
-          emailContacto: String(formData.get("emailContacto") || ""),
-          numeroPedido: String(formData.get("numeroPedido") || "") || undefined,
-          motivo: String(formData.get("motivo") || "")
-        })
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
       });
-      const datos = await respuesta.json();
-      if (!respuesta.ok) {
-        setError(datos.error || "No se pudo registrar la solicitud.");
-        return;
+
+      if (respuesta.ok) {
+        setEnviado(true);
+      } else {
+        setError("Hubo un problema al enviar tu solicitud. Por favor, intentalo de nuevo.");
       }
-      setCodigo(datos.codigo);
     } catch {
-      setError("Hubo un problema de conexión. Probá de nuevo en un momento.");
+      setError("Error de conexión. Revisá tu red e intentalo nuevamente.");
     } finally {
       setEnviando(false);
     }
   }
 
-  if (codigo) {
-    return (
-      <div className="mx-auto max-w-content px-4 pt-28 pb-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-xl">
-          <p className="entry-label mb-2 uppercase text-grisCalido">Solicitud registrada</p>
-          <h1 className="mb-4 font-serif text-3xl text-negroSuave">
-            Recibimos tu solicitud de arrepentimiento.
-          </h1>
-          <p className="font-sans text-sm text-grisCalido">
-            Tu código de solicitud es:
-          </p>
-          <p className="mt-2 font-mono text-2xl text-negroSuave">{codigo}</p>
-          <p className="mt-6 font-sans text-sm text-grisCalido">
-            Guardalo como comprobante. Te vamos a contactar a la dirección de email que
-            indicaste para coordinar los próximos pasos.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="mx-auto max-w-content px-4 pt-28 pb-12 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-content px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-xl">
-        <p className="entry-label mb-3 uppercase text-grisCalido">Derecho del consumidor</p>
-        <h1 className="mb-4 font-serif text-4xl text-negroSuave sm:text-5xl">
+        <p className="font-sans text-[0.65rem] font-normal uppercase tracking-[0.2em] text-muted/60 mb-1.5">
+          Derecho del Consumidor
+        </p>
+        <h1 className="mb-3 font-serif text-2xl sm:text-3xl font-normal text-ink/80">
           Botón de arrepentimiento
         </h1>
-        <p className="font-sans leading-relaxed text-grisCalido">
-          Tenés derecho a arrepentirte de tu compra dentro de los plazos que establece la ley,
-          sin necesidad de registrarte ni dar motivos. Completá este formulario y te vamos a
-          contactar para coordinar la devolución.
+        <p className="mb-8 font-sans text-xs sm:text-sm leading-relaxed text-body/75">
+          Tenés derecho a arrepentirte de tu compra dentro de los plazos que establece la
+          ley, sin necesidad de registrarte ni dar motivos. Completá este formulario y te
+          vamos a contactar para coordinar la devolución.
         </p>
 
-        <form onSubmit={manejarEnvio} className="mt-8 flex flex-col gap-4" noValidate>
-          <Campo id="nombreCompleto" label="Nombre completo" required />
-          <Campo id="emailContacto" label="Email de contacto" type="email" required />
-          <Campo
-            id="numeroPedido"
-            label="Número de pedido (si lo tenés a mano)"
-          />
-          <div>
-            <label htmlFor="motivo" className="mb-1 block font-sans text-sm text-grisCalido">
-              Contanos brevemente qué compra querés dejar sin efecto
-            </label>
-            <textarea
-              id="motivo"
-              name="motivo"
-              required
-              rows={4}
-              className="w-full rounded border border-beigeLine bg-paper px-3 py-2 font-sans text-sm text-negroSuave"
-            />
-          </div>
-
-          {error && (
-            <p role="alert" className="rounded border border-tierra/40 bg-tierra/5 p-4 font-sans text-sm text-tierraDark">
-              {error}
+        {enviado ? (
+          <div className="rounded-lg border border-olive/30 bg-olive/5 p-6 text-center">
+            <p className="font-serif text-lg text-olive mb-1">Solicitud enviada</p>
+            <p className="font-sans text-xs sm:text-sm text-body/75">
+              Recibimos tu solicitud de arrepentimiento. Nos pondremos en contacto a la brevedad para coordinar.
             </p>
-          )}
+          </div>
+        ) : (
+          <form onSubmit={manejarEnvio} className="flex flex-col gap-5">
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="nombre" className="font-sans text-xs sm:text-sm font-medium text-ink/75">
+                Nombre completo
+              </label>
+              <input
+                id="nombre"
+                name="nombre"
+                required
+                className="rounded-md border border-beigeLine/70 bg-paper/40 px-3.5 py-2.5 font-sans text-xs sm:text-sm text-ink outline-none transition-colors focus:border-olive focus:ring-1 focus:ring-olive/30"
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={enviando}
-            className="mt-2 rounded bg-negroSuave px-6 py-3.5 font-sans text-sm text-paper hover:bg-tierraDark disabled:opacity-60"
-          >
-            {enviando ? "Enviando..." : "Enviar solicitud"}
-          </button>
-        </form>
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="email" className="font-sans text-xs sm:text-sm font-medium text-ink/75">
+                Email de contacto
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className="rounded-md border border-beigeLine/70 bg-paper/40 px-3.5 py-2.5 font-sans text-xs sm:text-sm text-ink outline-none transition-colors focus:border-olive focus:ring-1 focus:ring-olive/30"
+              />
+            </div>
 
-        <hr className="stitch-divider my-12" />
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="pedido" className="font-sans text-xs sm:text-sm font-medium text-ink/75">
+                Número de pedido <span className="text-muted/60 font-normal">(si lo tenés a mano)</span>
+              </label>
+              <input
+                id="pedido"
+                name="pedido"
+                className="rounded-md border border-beigeLine/70 bg-paper/40 px-3.5 py-2.5 font-sans text-xs sm:text-sm text-ink outline-none transition-colors focus:border-olive focus:ring-1 focus:ring-olive/30"
+              />
+            </div>
 
-        <p className="font-sans text-[0.7rem] leading-relaxed text-body/70 opacity-80">
-          {DATOS_COMERCIALES.razonSocial} — {DATOS_COMERCIALES.domicilioComercial} — CUIT{" "}
-          {DATOS_COMERCIALES.cuit}. Consultas: {DATOS_COMERCIALES.emailAtencion},{" "}
-          {DATOS_COMERCIALES.horarioAtencion}.
-        </p>
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="motivo" className="font-sans text-xs sm:text-sm font-medium text-ink/75">
+                Contanos brevemente qué compra querés dejar sin efecto
+              </label>
+              <textarea
+                id="motivo"
+                name="motivo"
+                required
+                rows={4}
+                className="resize-none rounded-md border border-beigeLine/70 bg-paper/40 px-3.5 py-2.5 font-sans text-xs sm:text-sm text-ink outline-none transition-colors focus:border-olive focus:ring-1 focus:ring-olive/30"
+              />
+            </div>
+
+            {error && (
+              <p className="font-sans text-xs text-red-600/80">
+                {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={enviando}
+              className="mt-1 self-start rounded-md bg-olive px-6 py-3 font-sans text-xs sm:text-sm font-medium text-paper transition-colors hover:bg-olive/90 disabled:opacity-60"
+            >
+              {enviando ? "Enviando..." : "Enviar solicitud"}
+            </button>
+          </form>
+        )}
       </div>
-    </div>
-  );
-}
-
-function Campo({
-  id,
-  label,
-  type = "text",
-  required = false
-}: {
-  id: string;
-  label: string;
-  type?: string;
-  required?: boolean;
-}) {
-  return (
-    <div>
-      <label htmlFor={id} className="mb-1 block font-sans text-sm text-grisCalido">
-        {label}
-      </label>
-      <input
-        id={id}
-        name={id}
-        type={type}
-        required={required}
-        className="w-full rounded border border-beigeLine bg-paper px-3 py-2 font-sans text-sm text-negroSuave"
-      />
     </div>
   );
 }

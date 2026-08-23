@@ -38,34 +38,41 @@ export default function ContactoPage() {
   return (
     <div className="mx-auto max-w-content px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-xl">
-        <p className="entry-label mb-3 uppercase text-grisCalido">Contacto</p>
-        <h1 className="mb-4 font-serif text-4xl text-negroSuave sm:text-5xl">Escribinos</h1>
-        <p className="mb-10 font-sans text-sm leading-relaxed text-grisCalido">
+        {/* Etiqueta y Título ajustados en escala */}
+        <p className="font-sans text-[0.65rem] font-normal uppercase tracking-[0.2em] text-muted/60 mb-1.5">
+          Contacto
+        </p>
+        <h1 className="mb-3 font-serif text-2xl sm:text-3xl font-normal text-ink/80">
+          Escribinos
+        </h1>
+        <p className="mb-8 font-sans text-xs sm:text-sm leading-relaxed text-body/75">
           Para consultas sobre pedidos, productos o cualquier otra cosa que se te haya
           ocurrido mientras mirabas la tienda.
         </p>
 
         {enviado ? (
-          <div className="rounded border border-tierra/40 bg-tierra/5 p-6">
-            <p className="font-sans text-sm text-tierraDark">
-              Mensaje enviado correctamente. Te respondemos en cuanto podamos.
+          <div className="rounded-lg border border-olive/30 bg-olive/5 p-6 text-center">
+            <p className="font-serif text-lg text-olive mb-1">¡Mensaje recibido!</p>
+            <p className="font-sans text-xs sm:text-sm text-body/75">
+              Muchas gracias por escribirnos. Te respondemos al mail en cuanto lo leamos.
             </p>
           </div>
         ) : (
           <form onSubmit={manejarEnvio} className="flex flex-col gap-5">
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="nombre" className="font-sans text-sm text-negroSuave">
+              <label htmlFor="nombre" className="font-sans text-xs sm:text-sm font-medium text-ink/75">
                 Nombre
               </label>
               <input
                 id="nombre"
                 name="nombre"
                 required
-                className="rounded border border-beigeLine bg-paper px-4 py-3 font-sans text-sm outline-none focus-visible:border-tierra"
+                className="rounded-md border border-beigeLine/70 bg-paper/40 px-3.5 py-2.5 font-sans text-xs sm:text-sm text-ink outline-none transition-colors focus:border-olive focus:ring-1 focus:ring-olive/30"
               />
             </div>
+
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="email" className="font-sans text-sm text-negroSuave">
+              <label htmlFor="email" className="font-sans text-xs sm:text-sm font-medium text-ink/75">
                 Correo electrónico
               </label>
               <input
@@ -73,11 +80,12 @@ export default function ContactoPage() {
                 name="email"
                 type="email"
                 required
-                className="rounded border border-beigeLine bg-paper px-4 py-3 font-sans text-sm outline-none focus-visible:border-tierra"
+                className="rounded-md border border-beigeLine/70 bg-paper/40 px-3.5 py-2.5 font-sans text-xs sm:text-sm text-ink outline-none transition-colors focus:border-olive focus:ring-1 focus:ring-olive/30"
               />
             </div>
+
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="mensaje" className="font-sans text-sm text-negroSuave">
+              <label htmlFor="mensaje" className="font-sans text-xs sm:text-sm font-medium text-ink/75">
                 Mensaje
               </label>
               <textarea
@@ -85,12 +93,12 @@ export default function ContactoPage() {
                 name="mensaje"
                 required
                 rows={5}
-                className="resize-none rounded border border-beigeLine bg-paper px-4 py-3 font-sans text-sm outline-none focus-visible:border-tierra"
+                className="resize-none rounded-md border border-beigeLine/70 bg-paper/40 px-3.5 py-2.5 font-sans text-xs sm:text-sm text-ink outline-none transition-colors focus:border-olive focus:ring-1 focus:ring-olive/30"
               />
             </div>
 
             {error && (
-              <p className="font-sans text-xs text-red-600">
+              <p className="font-sans text-xs text-red-600/80">
                 {error}
               </p>
             )}
@@ -98,7 +106,7 @@ export default function ContactoPage() {
             <button
               type="submit"
               disabled={enviando}
-              className="mt-2 self-start rounded bg-negroSuave px-7 py-3.5 font-sans text-sm text-paper hover:bg-tierraDark disabled:opacity-60 transition-colors"
+              className="mt-1 self-start rounded-md bg-olive px-6 py-3 font-sans text-xs sm:text-sm font-medium text-paper transition-colors hover:bg-olive/90 disabled:opacity-60"
             >
               {enviando ? "Enviando..." : "Enviar mensaje"}
             </button>

@@ -975,6 +975,9 @@ html, body {
 .bg-\[\#f2eee9\]\/80 {
   background-color: rgb(242 238 233 / 0.8);
 }
+.bg-olive\/5 {
+  background-color: rgb(138 154 123 / 0.05);
+}
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -1409,6 +1412,9 @@ html, body {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity, 1));
 }
+.text-red-600\/80 {
+  color: rgb(220 38 38 / 0.8);
+}
 .underline {
   text-decoration-line: underline;
 }
@@ -1714,6 +1720,9 @@ img, svg, canvas {
 .focus\:ring-olive:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(138 154 123 / var(--tw-ring-opacity, 1));
+}
+.focus\:ring-olive\/30:focus {
+  --tw-ring-color: rgb(138 154 123 / 0.3);
 }
 .disabled\:opacity-60:disabled {
   opacity: 0.6;
