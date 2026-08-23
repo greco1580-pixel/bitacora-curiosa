@@ -42,8 +42,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Columna de Ilustración */}
-      <div className="flex-1 w-full flex justify-center md:justify-end mt-2 md:mt-0">
+      {/* Columna de Ilustración con Referencia */}
+      <div className="flex-1 w-full flex flex-col items-center md:items-end mt-2 md:mt-0">
         <div 
           className="relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] md:w-[360px] md:h-[360px]"
           style={{
@@ -53,12 +53,23 @@ export default function Hero() {
         >
           <Image
             src="/images/monstruito.png"
-            alt="Ilustración Monstruito"
+            alt="Monstruito observando con una lupa, personaje de Bitácora Curiosa"
             fill
             className="object-cover"
             priority
           />
         </div>
+
+        {/* Pie de ilustración / Referencia visible */}
+        <Link
+          href="/sobre-bitacora-curiosa#monstruito"
+          className="group mt-2 font-mono text-[9px] sm:text-[10px] tracking-wider uppercase text-muted/70 hover:text-ink transition-colors flex items-center gap-1 max-w-[280px] sm:max-w-[320px] md:max-w-[360px] text-center md:text-right"
+        >
+          <span className="font-semibold text-[#8B7896] group-hover:underline decoration-dashed">
+            MONSTRUITO
+          </span>
+          <span className="text-body/60">· una forma de mostrar lo que pasa por dentro</span>
+        </Link>
       </div>
 
     </section>
