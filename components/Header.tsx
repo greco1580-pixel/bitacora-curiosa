@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
+import { storeConfig } from "@/lib/store-config";
+import { AnnouncementBar } from "@/components/AnnouncementBar";
 import MobileMenu from "@/components/MobileMenu";
 
 const enlaces = [
@@ -15,75 +17,82 @@ export default function Header() {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const { items = [], abrirCarrito } = useCart();
 
-  // Se calcula la cantidad total sumando la propiedad 'cantidad' de cada ítem
   const cantidadTotal = items.reduce((acc, item) => acc + item.cantidad, 0);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-beigeLine bg-paper/95 backdrop-blur">
-      <div className="mx-auto flex max-w-content items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="font-serif italic text-base sm:text-lg tracking-normal text-olive/80 hover:text-olive transition-colors"
-        >
-          Bitácora Curiosa
-        </Link>
-
-        <nav className="hidden items-center gap-8 md:flex">
-          {enlaces.map((e) => (
-            <Link
-              key={e.href}
-              href={e.href}
-              className="underline-grow font-sans text-sm text-body/75 hover:text-olive transition-colors"
-            >
-              {e.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-4">
+    <>
+      <AnnouncementBar />
+      <header className="sticky top-0 z-40 border-b border-beigeLine bg-paper/95 backdrop-blur">
+        <div className="mx-auto flex max-w-content items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <Link
-            href="/tienda"
-            aria-label="Buscar productos"
-            className="hidden text-body/75 hover:text-olive transition-colors sm:block"
+            href="/"
+            className="font-serif italic text-base sm:text-lg tracking-normal text-olive/80 hover:text-olive transition-colors"
           >
-            <IconoBuscar />
+            Bitácora Curiosa
           </Link>
-          <button
-            aria-label="Mi cuenta (próximamente)"
-            className="hidden text-body/50 transition-colors sm:block"
-            title="Cuenta — próximamente"
-          >
-            <IconoCuenta />
-          </button>
-          <button
-            onClick={abrirCarrito}
-            aria-label={`Abrir carrito, ${cantidadTotal} productos`}
-            className="relative text-body/75 hover:text-olive transition-colors"
-          >
-            <IconoCarrito />
-            {cantidadTotal > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-tierra font-mono text-[10px] text-paper">
-                {cantidadTotal}
-              </span>
-            )}
-          </button>
-          <button
-            className="text-body/75 hover:text-olive transition-colors md:hidden"
-            aria-label="Abrir menú"
-            aria-expanded={menuAbierto}
-            onClick={() => setMenuAbierto(true)}
-          >
-            <IconoMenu />
-          </button>
-        </div>
-      </div>
 
-      <MobileMenu
-        abierto={menuAbierto}
-        onCerrar={() => setMenuAbierto(false)}
-        enlaces={enlaces}
-      />
-    </header>
+          <nav className="hidden items-center gap-8 md:flex">
+            {enlaces.map((e) => (
+              <Link
+                key={e.href}
+                href={e.href}
+                className="underline-grow font-sans text-sm text-body/75 hover:text-olive transition-colors"
+              >
+                {e.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-4">
+            <Link
+              href="/tienda"
+              aria-label="Buscar productos"
+              className="hidden text-body/75 hover:text-olive transition-colors sm:block"
+            >
+              <IconoBuscar />
+            </Link>
+            <button
+              aria-label="Mi cuenta (próximamente)"
+              className="hidden text-body/50 transition-colors sm:block"
+              title="Cuenta — próximamente"
+            >
+              <IconoCuenta />
+            </button>
+
+            {/* Carrito disponible únicamente fuera del modo preview */}
+            {storeConfig.mode !== "preview" && (
+              <button
+                onClick={abrirCarrito}
+                aria-label={`Abrir carrito, ${cantidadTotal} productos`}
+                className="relative text-body/75 hover:text-olive transition-colors"
+              >
+                <IconoCarrito />
+                {cantidadTotal > 0 && (
+                  <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-tierra font-mono text-[10px] text-paper">
+                    {cantidadTotal}
+                  </span>
+                )}
+              </button>
+            )}
+
+            <button
+              className="text-body/75 hover:text-olive transition-colors md:hidden"
+              aria-label="Abrir menú"
+              aria-expanded={menuAbierto}
+              onClick={() => setMenuAbierto(true)}
+            >
+              <IconoMenu />
+            </button>
+          </div>
+        </div>
+
+        <MobileMenu
+          abierto={menuAbierto}
+          onCerrar={() => setMenuAbierto(false)}
+          enlaces={enlaces}
+        />
+      </header>
+    </>
   );
 }
 

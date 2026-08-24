@@ -4,6 +4,7 @@ import InstagramSection from "@/components/InstagramSection";
 import Newsletter from "@/components/Newsletter";
 import Link from "next/link";
 import { obtenerDestacados } from "@/data/products";
+import { HomeLaunchSection } from "@/components/HomeLaunchSection";
 
 export default function HomePage() {
   const destacados = obtenerDestacados();
@@ -11,6 +12,8 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+
+      <HomeLaunchSection />
 
       {/* SECCIÓN DESDE LA TIENDA */}
       <section className="mx-auto max-w-content px-4 py-8 sm:px-6 lg:px-8">
