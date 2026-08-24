@@ -87,7 +87,7 @@ export default function Footer() {
               Comunidad
             </p>
             <a
-              href="https://instagram.com/bitacoracuriosa"
+              href="https://instagram.com/bitacora__curiosa"
               target="_blank"
               rel="noreferrer"
               className="font-sans text-xs sm:text-sm text-ink/75 hover:text-olive transition-colors"
