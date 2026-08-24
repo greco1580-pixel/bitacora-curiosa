@@ -22,11 +22,25 @@ export function InterestModal({ abierto, onCerrar, productoNombre }: InterestMod
     setCargando(true);
 
     try {
-      await fetch("/api/interest", {
+      // Generamos un ID amigable basado en el nombre del producto
+      const generatedId = productoNombre.toLowerCase().trim().replace(/\s+/g, "-");
+
+      const response = await fetch("/api/interest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, producto: productoNombre }),
+        body: JSON.stringify({
+          email: email.trim(),
+          productName: productoNombre,
+          productId: generatedId,
+          consent: true, // Campo obligatorio requerido por la API
+          sourcePage: typeof window !== "undefined" ? window.location.pathname : "/tienda",
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error("Respuesta no válida del servidor");
+      }
+
       setEnviado(true);
     } catch (err) {
       console.error("Error al registrar interés:", err);

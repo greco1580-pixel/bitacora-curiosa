@@ -1,5 +1,4 @@
 {
-  "/page": "app/page.js",
-  "/sobre-bitacora-curiosa/page": "app/sobre-bitacora-curiosa/page.js",
-  "/tienda/page": "app/tienda/page.js"
+  "/api/interest/route": "app/api/interest/route.js",
+  "/page": "app/page.js"
 }
