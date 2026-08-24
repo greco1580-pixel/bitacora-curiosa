@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/page": [
+    "/sobre-bitacora-curiosa/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/chunks/app/sobre-bitacora-curiosa/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -20,16 +20,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
-    ],
-    "/tienda/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/tienda/page.js"
-    ],
-    "/tienda/loading": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/tienda/loading.js"
     ]
   }
 }

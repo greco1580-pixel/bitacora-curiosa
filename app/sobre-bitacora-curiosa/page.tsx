@@ -181,13 +181,24 @@ export default function SobreBitacoraCuriosaPage() {
             </p>
           </div>
 
-          {/* Card Lateral */}
-          <div className="md:col-span-5">
-            <div className="border border-black/5 bg-black/[0.015] p-4 rounded-sm">
-              <p className="text-[0.55rem] tracking-[0.15em] uppercase text-ink/60 mb-3 font-mono">
+          {/* Card Lateral con la Imagen e Información */}
+          <div className="md:col-span-5 space-y-3">
+            {/* Imagen de Monstruito con encuadre de menor altura */}
+            <div className="relative aspect-[4/3] w-full overflow-hidden border border-black/5 bg-black/[0.015] p-1.5 rounded-sm">
+              <Image
+                src="/monstruito-detalle-ojo.png"
+                alt="Detalle de Monstruito"
+                fill
+                className="object-cover object-[right_bottom] rounded-sm"
+              />
+            </div>
+
+            {/* Cuadro Estado Variable */}
+            <div className="border border-black/5 bg-black/[0.015] p-3 rounded-sm">
+              <p className="text-[0.55rem] tracking-[0.15em] uppercase text-ink/60 mb-2 font-mono">
                 Estado Variable
               </p>
-              <div className="flex flex-wrap gap-x-1.5 gap-y-2 text-[0.7rem] text-body/75 leading-relaxed font-mono">
+              <div className="flex flex-wrap gap-x-1.5 gap-y-1 text-[0.68rem] text-body/75 leading-relaxed font-mono">
                 <span>Curioso</span> <span className="text-muted/30">/</span>
                 <span>Saturado</span> <span className="text-muted/30">/</span>
                 <span>Entusiasmado</span> <span className="text-muted/30">/</span>
