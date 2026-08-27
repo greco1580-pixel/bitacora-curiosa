@@ -23,7 +23,6 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  // Inicialización perezosa: lee localStorage en el primer render exacto
   const [items, setItems] = useState<CartItem[]>(() => {
     if (typeof window === "undefined") return [];
     try {
@@ -38,12 +37,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [cargado, setCargado] = useState(false);
 
-  // Marca que el componente ya montó en el cliente
   useEffect(() => {
     setCargado(true);
   }, []);
 
-  // Persiste en localStorage SOLO después del montaje inicial
   useEffect(() => {
     if (!cargado) return;
     try {
@@ -59,6 +56,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const agregarAlCarrito = (producto: any, varianteId?: string | number | null, cantidad = 1) => {
     if (!producto) return;
 
+    const stockDisponible = producto?.stock ?? 0;
+    if (stockDisponible <= 0) return;
+
     setItems((prevItems) => {
       const indexExistente = prevItems.findIndex(
         (item) => item.producto.id === producto.id && item.varianteId === varianteId
@@ -66,11 +66,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       if (indexExistente > -1) {
         const nuevosItems = [...prevItems];
-        nuevosItems[indexExistente].cantidad += cantidad;
+        const cantidadActual = nuevosItems[indexExistente].cantidad;
+        // Limita la suma total al stock disponible
+        nuevosItems[indexExistente].cantidad = Math.min(cantidadActual + cantidad, stockDisponible);
         return nuevosItems;
       }
 
-      return [...prevItems, { producto, varianteId, cantidad }];
+      // Limita la cantidad inicial al stock disponible
+      return [...prevItems, { producto, varianteId, cantidad: Math.min(cantidad, stockDisponible) }];
     });
 
     setIsOpen(true);
@@ -85,9 +88,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       eliminarDelCarrito(index);
       return;
     }
+
     setItems((prev) => {
+      if (index < 0 || index >= prev.length) return prev;
+      
       const nuevos = [...prev];
-      nuevos[index].cantidad = cantidad;
+      const stockDisponible = nuevos[index].producto?.stock ?? 0;
+      
+      // Bloquea incrementos por encima del stock existente
+      nuevos[index].cantidad = Math.min(cantidad, stockDisponible);
       return nuevos;
     });
   };

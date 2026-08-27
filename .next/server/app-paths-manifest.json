@@ -1,7 +1,3 @@
 {
-  "/page": "app/page.js",
-  "/tienda/page": "app/tienda/page.js",
-  "/producto/[slug]/page": "app/producto/[slug]/page.js",
-  "/preguntas-frecuentes/page": "app/preguntas-frecuentes/page.js",
   "/sobre-bitacora-curiosa/page": "app/sobre-bitacora-curiosa/page.js"
 }
