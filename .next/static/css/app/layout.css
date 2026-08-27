@@ -1074,6 +1074,10 @@ html, body {
 .border-olive\/30 {
   border-color: rgb(138 154 123 / 0.3);
 }
+.border-\[\#d9cba3\] {
+  --tw-border-opacity: 1;
+  border-color: rgb(217 203 163 / var(--tw-border-opacity, 1));
+}
 .border-l-\[\#8797A6\] {
   --tw-border-opacity: 1;
   border-left-color: rgb(135 151 166 / var(--tw-border-opacity, 1));
@@ -1225,6 +1229,17 @@ html, body {
 }
 .bg-white\/80 {
   background-color: rgb(255 255 255 / 0.8);
+}
+.bg-\[\#6b8292\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 130 146 / var(--tw-bg-opacity, 1));
+}
+.bg-\[\#fbf9f5\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(251 249 245 / var(--tw-bg-opacity, 1));
+}
+.bg-black\/50 {
+  background-color: rgb(0 0 0 / 0.5);
 }
 .bg-\[radial-gradient\(ellipse_at_center\2c _var\(--tw-gradient-stops\)\)\] {
   background-image: radial-gradient(ellipse at center, var(--tw-gradient-stops));
@@ -1713,6 +1728,26 @@ html, body {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
+.text-\[\#423b32\] {
+  --tw-text-opacity: 1;
+  color: rgb(66 59 50 / var(--tw-text-opacity, 1));
+}
+.text-\[\#6b6257\] {
+  --tw-text-opacity: 1;
+  color: rgb(107 98 87 / var(--tw-text-opacity, 1));
+}
+.text-\[\#8a9a7b\] {
+  --tw-text-opacity: 1;
+  color: rgb(138 154 123 / var(--tw-text-opacity, 1));
+}
+.text-\[\#8c8275\] {
+  --tw-text-opacity: 1;
+  color: rgb(140 130 117 / var(--tw-text-opacity, 1));
+}
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+}
 .underline {
   text-decoration-line: underline;
 }
@@ -1998,6 +2033,10 @@ img, svg, canvas {
   --tw-bg-opacity: 1;
   background-color: rgb(240 236 231 / var(--tw-bg-opacity, 1));
 }
+.hover\:bg-\[\#596d7b\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(89 109 123 / var(--tw-bg-opacity, 1));
+}
 .hover\:text-\[\#678294\]:hover {
   --tw-text-opacity: 1;
   color: rgb(103 130 148 / var(--tw-text-opacity, 1));
@@ -2013,6 +2052,10 @@ img, svg, canvas {
 .hover\:text-red-700:hover {
   --tw-text-opacity: 1;
   color: rgb(185 28 28 / var(--tw-text-opacity, 1));
+}
+.hover\:text-gray-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
 }
 .hover\:underline:hover {
   text-decoration-line: underline;
@@ -2050,6 +2093,10 @@ img, svg, canvas {
   border-color: rgb(147 160 133 / var(--tw-border-opacity, 1));
 }
 .focus\:border-olive:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(138 154 123 / var(--tw-border-opacity, 1));
+}
+.focus\:border-\[\#8a9a7b\]:focus {
   --tw-border-opacity: 1;
   border-color: rgb(138 154 123 / var(--tw-border-opacity, 1));
 }

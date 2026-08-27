@@ -154,6 +154,7 @@ export default function ProductCard({ producto, variant }: { producto: any; vari
         abierto={modalAbierto}
         onCerrar={() => setModalAbierto(false)}
         productoNombre={producto?.nombre || producto?.name}
+        modo={esModoPreview ? "preview" : "sin-stock"}
       />
     </>
   );

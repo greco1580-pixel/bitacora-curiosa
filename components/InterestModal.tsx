@@ -2,13 +2,19 @@
 
 import { useState } from "react";
 
-export interface InterestModalProps {
+interface InterestModalProps {
   abierto: boolean;
   onCerrar: () => void;
-  productoNombre: string;
+  productoNombre?: string;
+  modo?: "preview" | "sin-stock"; // Nueva prop para alternar textos
 }
 
-export function InterestModal({ abierto, onCerrar, productoNombre }: InterestModalProps) {
+export function InterestModal({
+  abierto,
+  onCerrar,
+  productoNombre,
+  modo = "preview",
+}: InterestModalProps) {
   const [email, setEmail] = useState("");
   const [enviado, setEnviado] = useState(false);
   const [cargando, setCargando] = useState(false);
@@ -20,105 +26,87 @@ export function InterestModal({ abierto, onCerrar, productoNombre }: InterestMod
     if (!email) return;
 
     setCargando(true);
-
     try {
-      // Generamos un ID amigable basado en el nombre del producto
-      const generatedId = productoNombre.toLowerCase().trim().replace(/\s+/g, "-");
-
-      const response = await fetch("/api/interest", {
+      const res = await fetch("/api/interest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email.trim(),
-          productName: productoNombre,
-          productId: generatedId,
-          consent: true, // Campo obligatorio requerido por la API
-          sourcePage: typeof window !== "undefined" ? window.location.pathname : "/tienda",
-        }),
+        body: JSON.stringify({ email, producto: productoNombre, motivo: modo }),
       });
 
-      if (!response.ok) {
-        throw new Error("Respuesta no válida del servidor");
+      if (res.ok) {
+        setEnviado(true);
       }
-
-      setEnviado(true);
     } catch (err) {
-      console.error("Error al registrar interés:", err);
+      console.error(err);
     } finally {
       setCargando(false);
     }
   };
 
-  const handleClose = () => {
-    setEmail("");
-    setEnviado(false);
-    onCerrar();
-  };
+  const esSinStock = modo === "sin-stock";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-md rounded-xl bg-[#FAF8F5] p-6 shadow-xl border border-black/10">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="relative w-full max-w-md rounded-lg bg-[#fbf9f5] p-6 shadow-xl border border-[#d9cba3]">
         <button
-          onClick={handleClose}
-          className="absolute right-4 top-4 text-xs font-mono text-muted hover:text-ink transition-colors"
+          onClick={onCerrar}
+          className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
         >
           ✕
         </button>
 
-        {!enviado ? (
-          <div className="space-y-4">
-            <div>
-              <p className="text-[0.6rem] font-mono tracking-[0.2em] text-[#678294] uppercase mb-1">
-                REGISTRO PREVIO
-              </p>
-              <h3 className="font-serif text-lg text-ink font-normal">
-                Anotarme para {productoNombre}
-              </h3>
-            </div>
-
-            <p className="text-xs text-body/80 leading-relaxed font-sans font-light">
-              Dejá tu e-mail para enterarte en cuanto abramos la preventa de esta primera tanda.
+        {enviado ? (
+          <div className="py-6 text-center">
+            <h3 className="font-serif text-xl text-[#423b32] mb-2">¡Listo! Te avisamos.</h3>
+            <p className="font-sans text-sm text-[#6b6257]">
+              {esSinStock
+                ? "Te enviaremos un correo apenas repongamos el stock de este producto."
+                : "Te avisaremos en cuanto abramos la preventa."}
+            </p>
+          </div>
+        ) : (
+          <div>
+            <p className="text-[0.65rem] font-mono uppercase tracking-widest text-[#8a9a7b] mb-1">
+              {esSinStock ? "PRODUCTO AGOTADO" : "REGISTRO PREVIO"}
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-3 pt-1">
+            <h3 className="font-serif text-xl text-[#423b32] mb-3">
+              {esSinStock
+                ? `Anotarme para reingreso de ${productoNombre || "este producto"}`
+                : `Anotarme para ${productoNombre || "la preventa"}`}
+            </h3>
+
+            <p className="font-sans text-xs text-[#6b6257] mb-4 leading-relaxed">
+              {esSinStock
+                ? "Dejá tu e-mail y te notificaremos cuando vuelva a haber stock disponible."
+                : "Dejá tu e-mail para enterarte en cuanto abramos la preventa de esta primera tanda."}
+            </p>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <input
                 type="email"
                 required
                 placeholder="tu@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-sm border border-black/15 bg-white/80 px-3 py-2 text-xs text-ink placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-[#678294]"
+                className="w-full rounded border border-[#d9cba3] bg-white px-3 py-2 text-sm text-[#423b32] outline-none focus:border-[#8a9a7b]"
               />
+
               <button
                 type="submit"
                 disabled={cargando}
-                className="w-full rounded-sm bg-[#678294] py-2.5 text-xs font-mono uppercase tracking-wider text-white transition-colors hover:bg-[#556d7e] disabled:opacity-50 cursor-pointer"
+                className="w-full rounded bg-[#6b8292] py-2.5 text-xs font-mono uppercase tracking-wider text-white transition-colors hover:bg-[#596d7b] disabled:opacity-50"
               >
-                {cargando ? "Anotando..." : "Notificarme"}
+                {cargando ? "ENVIANDO..." : "NOTIFICARME"}
               </button>
             </form>
 
-            <p className="text-[0.62rem] text-muted/70 font-mono text-center">
+            <p className="mt-3 text-center font-sans text-[0.7rem] text-[#8c8275]">
               No genera compromiso de compra ni reserva.
             </p>
-          </div>
-        ) : (
-          <div className="py-6 text-center space-y-3">
-            <h3 className="font-serif text-xl text-ink font-normal">¡Anotado!</h3>
-            <p className="text-xs text-body/80 font-sans font-light">
-              Te avisaremos al correo apenas se habilite la preventa de {productoNombre}.
-            </p>
-            <button
-              onClick={handleClose}
-              className="mt-2 text-xs font-mono uppercase tracking-wider underline text-[#678294] hover:text-ink cursor-pointer"
-            >
-              Cerrar
-            </button>
           </div>
         )}
       </div>
     </div>
   );
 }
-
-export default InterestModal;
