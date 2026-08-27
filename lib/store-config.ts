@@ -7,7 +7,7 @@ export interface StoreConfig {
 }
 
 export const storeConfig: StoreConfig = {
-  mode: "available",
+  mode: "preview",
   preorderDispatchStart: null,
   preorderDispatchEnd: null,
 };
