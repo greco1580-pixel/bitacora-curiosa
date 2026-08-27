@@ -17,66 +17,99 @@ export default function CartDrawer() {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex justify-end bg-black/30 backdrop-blur-[2px] transition-opacity"
+      className="fixed inset-0 z-[9999] flex justify-end bg-[#2d2926]/40 backdrop-blur-[2px] transition-opacity"
       onClick={cerrarCarrito}
     >
       <div
-        className="w-full max-w-[380px] sm:max-w-[420px] h-full bg-surface/95 border-l border-line/40 p-6 flex flex-col justify-between overflow-y-auto shadow-xl"
+        className="w-full max-w-[380px] sm:max-w-[420px] h-full bg-[#faf8f5] border-l border-[#6b5b7b]/20 p-6 md:p-7 flex flex-col justify-between overflow-y-auto shadow-2xl relative"
+        style={{
+          backgroundImage: "radial-gradient(#6b5b7b 0.4px, transparent 0.4px)",
+          backgroundSize: "12px 12px",
+          backgroundColor: "#faf8f5",
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         <div>
-          <div className="flex justify-between items-center mb-6 pb-2 border-b border-line/30">
-            <h2 className="font-serif text-xl text-ink/85 font-normal">Tu Carrito</h2>
+          {/* Header del Carrito */}
+          <div className="flex justify-between items-center mb-6 pb-3 border-b border-[#6b5b7b]/15">
+            <div>
+              <span className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-[#6b5b7b] block">
+                CURIOSIDADES SELECCIONADAS
+              </span>
+              <h2 className="font-serif text-xl text-[#423b32] font-normal leading-tight">
+                Tu Carrito
+              </h2>
+            </div>
             <button
               onClick={cerrarCarrito}
-              className="text-muted/70 hover:text-ink text-base transition-colors p-1 cursor-pointer"
+              className="text-[#8c8275]/50 hover:text-[#423b32] transition-colors p-1 font-mono text-xs cursor-pointer"
+              aria-label="Cerrar carrito"
             >
               ✕
             </button>
           </div>
 
+          {/* Carrito Vacío */}
           {items.length === 0 ? (
-            <p className="font-sans text-xs text-muted/80 font-light py-8 text-center">
-              El carrito está vacío.
-            </p>
+            <div className="py-16 px-4 text-center flex flex-col items-center justify-center">
+              <span className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-[#6b5b7b]/80 mb-2">
+                SIN SELECCIÓN
+              </span>
+              <h4 className="font-serif text-lg text-[#423b32] mb-2 font-normal">
+                Todavía no elegiste ninguna curiosidad
+              </h4>
+              <p className="font-sans text-xs text-[#6b6257] leading-relaxed max-w-xs mb-6">
+                Explorá nuestra selección de objetos para dar con ese pequeño hallazgo diario.
+              </p>
+              <button
+                onClick={cerrarCarrito}
+                className="px-5 py-2 rounded border border-[#6b5b7b]/30 text-[#6b5b7b] hover:bg-[#6b5b7b]/5 font-mono text-xs uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                IR A EXPLORAR
+              </button>
+            </div>
           ) : (
+            /* Lista de Ítems */
             <div className="flex flex-col gap-4">
               {items.map((item, index) => (
                 <div
                   key={index}
-                  className="border-b border-line/30 pb-3 flex justify-between items-center gap-2"
+                  className="border-b border-[#6b5b7b]/15 pb-4 flex justify-between items-center gap-3"
                 >
-                  <div>
-                    <p className="font-serif text-sm text-ink/85 font-normal leading-snug">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-serif text-sm text-[#423b32] font-normal leading-snug truncate">
                       {item.producto?.nombre || item.producto?.name || "Producto"}
                     </p>
-                    <p className="font-sans text-xs text-muted/80 font-light mt-1">
+                    <p className="font-sans text-xs text-[#6b6257] mt-1">
                       {formatoARS(item.producto?.precio || 0)}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center rounded-lg border border-line/40 bg-surface/80">
+                  <div className="flex items-center gap-3">
+                    {/* Controles de cantidad */}
+                    <div className="flex items-center rounded border border-[#6b5b7b]/20 bg-white/80 shadow-sm">
                       <button
                         onClick={() => actualizarCantidad(index, item.cantidad - 1)}
-                        className="px-2 py-0.5 font-sans text-xs text-ink/70 hover:text-ink transition-colors cursor-pointer"
+                        className="px-2.5 py-1 font-mono text-xs text-[#544660] hover:bg-[#6b5b7b]/10 transition-colors cursor-pointer rounded-l"
                       >
                         -
                       </button>
-                      <span className="px-2 font-sans text-xs font-medium text-ink/80">
+                      <span className="px-2 font-mono text-xs text-[#423b32]">
                         {item.cantidad}
                       </span>
                       <button
                         onClick={() => actualizarCantidad(index, item.cantidad + 1)}
-                        className="px-2 py-0.5 font-sans text-xs text-ink/70 hover:text-ink transition-colors cursor-pointer"
+                        className="px-2.5 py-1 font-mono text-xs text-[#544660] hover:bg-[#6b5b7b]/10 transition-colors cursor-pointer rounded-r"
                       >
                         +
                       </button>
                     </div>
 
+                    {/* Eliminar ítem */}
                     <button
                       onClick={() => eliminarDelCarrito(index)}
-                      className="font-sans text-xs text-red-800/50 hover:text-red-700 transition-colors ml-1 cursor-pointer"
+                      className="text-[#8c8275]/50 hover:text-[#9e4a4a] transition-colors p-1 font-mono text-xs cursor-pointer"
+                      title="Quitar objeto"
                     >
                       ✕
                     </button>
@@ -87,22 +120,23 @@ export default function CartDrawer() {
           )}
         </div>
 
+        {/* Footer del Carrito */}
         {items.length > 0 && (
-          <div className="border-t border-line/40 pt-4 mt-6 space-y-3">
-            <div className="flex justify-between items-center font-sans text-xs text-muted/80 font-light">
+          <div className="border-t border-[#6b5b7b]/20 pt-5 mt-6 space-y-3">
+            <div className="flex justify-between items-center font-sans text-xs text-[#6b6257]">
               <span>Subtotal</span>
-              <span className="font-medium text-ink/80">{formatoARS(subtotal)}</span>
+              <span className="font-medium text-[#423b32]">{formatoARS(subtotal)}</span>
             </div>
-            <div className="flex justify-between items-center font-sans text-xs text-muted/80 font-light">
+            <div className="flex justify-between items-center font-sans text-xs text-[#6b6257]">
               <span>Envío</span>
-              <span className="font-medium text-ink/80">A calcular en checkout</span>
+              <span className="text-[#8c8275]/80 italic">A calcular en checkout</span>
             </div>
 
-            <div className="flex justify-between items-center pt-2 border-t border-line/20">
-              <span className="font-sans text-xs font-medium uppercase tracking-wider text-ink/80">
+            <div className="flex justify-between items-center pt-3 border-t border-[#6b5b7b]/15">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#6b5b7b]">
                 Total
               </span>
-              <span className="font-serif text-base text-ink/90 font-medium">
+              <span className="font-serif text-lg text-[#423b32] font-medium">
                 {formatoARS(subtotal)}
               </span>
             </div>
@@ -112,9 +146,9 @@ export default function CartDrawer() {
                 cerrarCarrito();
                 router.push("/carrito");
               }}
-              className="w-full bg-olive/85 hover:bg-olive text-white py-3 rounded-lg font-sans text-xs uppercase tracking-wider transition-all duration-200 shadow-sm cursor-pointer mt-2"
+              className="w-full bg-[#6b5b7b] hover:bg-[#584967] text-[#faf8f5] py-3 rounded text-xs font-mono uppercase tracking-[0.12em] transition-all duration-200 shadow-sm active:scale-[0.99] cursor-pointer mt-3"
             >
-              Iniciar Compra
+              INICIAR COMPRA
             </button>
           </div>
         )}

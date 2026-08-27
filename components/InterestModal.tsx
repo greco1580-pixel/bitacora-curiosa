@@ -6,7 +6,7 @@ interface InterestModalProps {
   abierto: boolean;
   onCerrar: () => void;
   productoNombre?: string;
-  modo?: "preview" | "sin-stock"; // Nueva prop para alternar textos
+  modo?: "preview" | "sin-stock";
 }
 
 export function InterestModal({
@@ -46,63 +46,96 @@ export function InterestModal({
   const esSinStock = modo === "sin-stock";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="relative w-full max-w-md rounded-lg bg-[#fbf9f5] p-6 shadow-xl border border-[#d9cba3]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#2d2926]/40 backdrop-blur-[2px] p-4">
+      <div 
+        className="relative w-full max-w-md rounded-lg bg-[#faf8f5] p-7 md:p-8 shadow-2xl border border-[#6b5b7b]/20 overflow-hidden"
+        style={{
+          backgroundImage: "radial-gradient(#6b5b7b 0.4px, transparent 0.4px)",
+          backgroundSize: "12px 12px",
+          backgroundColor: "#faf8f5"
+        }}
+      >
+        {/* Detalle visual sutil en la esquina superior */}
+        <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-[#6b5b7b]/5 pointer-events-none" />
+
+        {/* Botón de cierre discreto */}
         <button
           onClick={onCerrar}
-          className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+          className="absolute right-4 top-4 text-[#8c8275]/50 hover:text-[#423b32] transition-colors p-1 text-xs font-mono"
+          aria-label="Cerrar"
         >
           ✕
         </button>
 
         {enviado ? (
-          <div className="py-6 text-center">
-            <h3 className="font-serif text-xl text-[#423b32] mb-2">¡Listo! Te avisamos.</h3>
-            <p className="font-sans text-sm text-[#6b6257]">
-              {esSinStock
-                ? "Te enviaremos un correo apenas repongamos el stock de este producto."
-                : "Te avisaremos en cuanto abramos la preventa."}
+          <div className="py-6 text-center flex flex-col items-center">
+            <span className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-[#6b5b7b] mb-2 block">
+              LISTO, QUEDÓ ANOTADO
+            </span>
+            <h3 className="font-serif text-2xl text-[#423b32] mb-3 font-normal">
+              ¡Tomamos nota!
+            </h3>
+            <p className="font-sans text-xs text-[#6b6257] leading-relaxed max-w-xs mb-6">
+              Te avisaremos al instante apenas tengamos novedades de este objeto.
             </p>
+            <button
+              onClick={onCerrar}
+              className="px-6 py-2 rounded border border-[#6b5b7b]/30 text-[#6b5b7b] hover:bg-[#6b5b7b]/5 text-xs font-mono uppercase tracking-wider transition-colors"
+            >
+              VOLVER A NAVEGAR
+            </button>
           </div>
         ) : (
-          <div>
-            <p className="text-[0.65rem] font-mono uppercase tracking-widest text-[#8a9a7b] mb-1">
-              {esSinStock ? "PRODUCTO AGOTADO" : "REGISTRO PREVIO"}
-            </p>
+          <div className="flex flex-col">
+            {/* Etiqueta superior */}
+            <span className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-[#6b5b7b]/90 mb-2 block">
+              {esSinStock ? "SE FUE POR UN RATITO" : "REGISTRO PREVIO"}
+            </span>
 
-            <h3 className="font-serif text-xl text-[#423b32] mb-3">
+            {/* Título principal */}
+            <h3 className="font-serif text-xl md:text-2xl text-[#423b32] font-normal leading-snug mb-2">
               {esSinStock
-                ? `Anotarme para reingreso de ${productoNombre || "este producto"}`
-                : `Anotarme para ${productoNombre || "la preventa"}`}
+                ? "¿Querés que te avisemos cuando vuelva?"
+                : "¿Querés enterarte cuando abra la preventa?"}
             </h3>
 
-            <p className="font-sans text-xs text-[#6b6257] mb-4 leading-relaxed">
+            {/* Nombre del producto destacado en caja suave */}
+            {productoNombre && (
+              <div className="my-2.5 inline-self-start px-3 py-1.5 rounded bg-[#6b5b7b]/8 border border-[#6b5b7b]/15 text-[#544660] font-serif text-sm italic">
+                “{productoNombre}”
+              </div>
+            )}
+
+            {/* Texto descriptivo */}
+            <p className="font-sans text-xs text-[#6b6257] leading-relaxed mb-6 mt-1">
               {esSinStock
-                ? "Dejá tu e-mail y te notificaremos cuando vuelva a haber stock disponible."
-                : "Dejá tu e-mail para enterarte en cuanto abramos la preventa de esta primera tanda."}
+                ? "Dejanos tu mail y te contamos apenas repongamos."
+                : "Dejanos tu mail para enterarte en cuanto abramos la preventa de esta tanda."}
             </p>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            {/* Formulario */}
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input
                 type="email"
                 required
                 placeholder="tu@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded border border-[#d9cba3] bg-white px-3 py-2 text-sm text-[#423b32] outline-none focus:border-[#8a9a7b]"
+                className="w-full rounded border border-[#6b5b7b]/25 bg-white/80 px-4 py-2.5 text-sm text-[#423b32] placeholder-[#8c8275]/60 outline-none focus:border-[#6b5b7b] focus:bg-white transition-all shadow-sm"
               />
 
               <button
                 type="submit"
                 disabled={cargando}
-                className="w-full rounded bg-[#6b8292] py-2.5 text-xs font-mono uppercase tracking-wider text-white transition-colors hover:bg-[#596d7b] disabled:opacity-50"
+                className="w-full rounded bg-[#6b5b7b] py-3 text-xs font-mono uppercase tracking-[0.12em] text-[#faf8f5] transition-all hover:bg-[#584967] active:scale-[0.99] disabled:opacity-50 shadow-sm"
               >
-                {cargando ? "ENVIANDO..." : "NOTIFICARME"}
+                {cargando ? "ANOTANDO..." : "AVISAME CUANDO VUELVA"}
               </button>
             </form>
 
-            <p className="mt-3 text-center font-sans text-[0.7rem] text-[#8c8275]">
-              No genera compromiso de compra ni reserva.
+            {/* Aclaración inferior */}
+            <p className="mt-5 text-center font-sans text-[0.7rem] text-[#8c8275]/80 leading-tight">
+              Solo es un aviso: no reserva ni compromete la compra.
             </p>
           </div>
         )}
@@ -110,4 +143,5 @@ export function InterestModal({
     </div>
   );
 }
+
 export default InterestModal;
