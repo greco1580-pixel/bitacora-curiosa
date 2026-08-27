@@ -110,3 +110,4 @@ export function InterestModal({
     </div>
   );
 }
+export default InterestModal;
