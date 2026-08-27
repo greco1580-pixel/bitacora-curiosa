@@ -88,7 +88,7 @@ export const productos: Producto[] = [
     precio: 10000,
     categoria: "stickers",
     imagenes: ["/images/productos/acercarse-bajo-su-propio-riesgo.png"],
-    stock: 0,
+    stock: 5,
     destacado: false, // Forzamos false para que solo 4 vayan a portada
   },
 ];
