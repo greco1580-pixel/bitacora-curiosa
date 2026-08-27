@@ -16,7 +16,7 @@ export const productos: Producto[] = [
     precio: 6000,
     categoria: "stickers",
     imagenes: ["/images/productos/todo-al-mismo-tiempo.png"],
-    stock: 42,
+    stock: 5,
     destacado: true,
   },
   {
@@ -34,7 +34,7 @@ export const productos: Producto[] = [
     precio: 6000,
     categoria: "stickers",
     imagenes: ["/images/productos/adulto-por-error.png"],
-    stock: 30,
+    stock: 5,
     destacado: true,
   },
   {
@@ -52,7 +52,7 @@ export const productos: Producto[] = [
     precio: 6000,
     categoria: "stickers",
     imagenes: ["/images/productos/una-cosa-llevo-a-siete.png"],
-    stock: 25,
+    stock: 5,
     destacado: true,
   },
   {
@@ -70,7 +70,7 @@ export const productos: Producto[] = [
     precio: 10000,
     categoria: "stickers",
     imagenes: ["/images/productos/cerebro-ocupado.png"],
-    stock: 15,
+    stock: 5,
     destacado: true,
   },
   {
@@ -88,7 +88,7 @@ export const productos: Producto[] = [
     precio: 10000,
     categoria: "stickers",
     imagenes: ["/images/productos/acercarse-bajo-su-propio-riesgo.png"],
-    stock: 18,
+    stock: 0,
     destacado: false, // Forzamos false para que solo 4 vayan a portada
   },
 ];
