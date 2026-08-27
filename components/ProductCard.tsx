@@ -12,11 +12,16 @@ export default function ProductCard({ producto, variant }: { producto: any; vari
   const [agregado, setAgregado] = useState(false);
   const [modalAbierto, setModalAbierto] = useState(false);
 
+  // Evaluamos el modo actual definido en storeConfig
+  const esModoPreview = storeConfig.mode === "preview";
+  const tieneStock = (producto?.stock ?? 0) > 0;
+
   const handleAgregar = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (storeConfig.mode === "preview") {
+    // Si está en modo preview O sin stock real, abre el modal
+    if (esModoPreview || !tieneStock) {
       setModalAbierto(true);
       return;
     }
@@ -85,7 +90,8 @@ export default function ProductCard({ producto, variant }: { producto: any; vari
           </p>
         </Link>
 
-        {storeConfig.mode === "preview" ? (
+        {/* BOTÓN DINÁMICO */}
+        {esModoPreview ? (
           <div>
             <p className="text-[0.6rem] font-mono text-muted/70 uppercase tracking-widest mb-1.5 text-center">
               EN PRODUCCIÓN
@@ -98,7 +104,7 @@ export default function ProductCard({ producto, variant }: { producto: any; vari
               AVISAME CUANDO ABRA →
             </button>
           </div>
-        ) : (
+        ) : tieneStock ? (
           <button
             type="button"
             onClick={handleAgregar}
@@ -119,6 +125,27 @@ export default function ProductCard({ producto, variant }: { producto: any; vari
             }}
           >
             {agregado ? "✓ Agregado" : "Agregar al carrito"}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleAgregar}
+            style={{
+              width: "100%",
+              padding: "9px 0",
+              backgroundColor: "#efece6",
+              color: "#6b6257",
+              border: "1px solid #d9cba3",
+              borderRadius: "4px",
+              fontFamily: "var(--font-archivo, sans-serif)",
+              fontSize: "0.7rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              fontWeight: 500,
+              cursor: "pointer"
+            }}
+          >
+            Anotarme para cuando haya stock
           </button>
         )}
       </div>
